@@ -335,6 +335,43 @@ export const appRouter = router({
       .query(async ({ ctx, input }) => {
         return getMonthlyTrends(ctx.user.id, input?.months ?? 6);
       }),
+
+    bulkImport: protectedProcedure
+      .input(
+        z.object({
+          rows: z.array(
+            z.object({
+              type: z.enum(["income", "expense", "invoice"]),
+              category: z.string().min(1).max(128),
+              description: z.string().optional(),
+              amount: z.number().positive(),
+              transactionDate: z.number(),
+              notes: z.string().optional(),
+            })
+          ).min(1).max(500),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        let imported = 0;
+        const errors: string[] = [];
+        for (const row of input.rows) {
+          try {
+            await createTransaction({
+              userId: ctx.user.id,
+              type: row.type,
+              category: row.category,
+              description: row.description,
+              amount: row.amount.toString(),
+              transactionDate: row.transactionDate,
+              notes: row.notes,
+            });
+            imported++;
+          } catch (e) {
+            errors.push(`Row ${imported + errors.length + 1}: ${e instanceof Error ? e.message : String(e)}`);
+          }
+        }
+        return { imported, skipped: errors.length, errors: errors.slice(0, 10) };
+      }),
   }),
 
   // ─── Simulations ───────────────────────────────────────────────────────────

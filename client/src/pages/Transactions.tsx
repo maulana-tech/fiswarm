@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useState } from "react";
-import { Trash2, Plus, X } from "lucide-react";
+import { Trash2, Plus, X, Upload } from "lucide-react";
+import ImportTransactions from "@/components/ImportTransactions";
 
 const INCOME_CATEGORIES = ["Sales Revenue", "Service Fee", "Investment Return", "Loan Received", "Other Income"];
 const EXPENSE_CATEGORIES = ["Raw Materials", "Salaries", "Rent", "Utilities", "Marketing", "Equipment", "Transport", "Tax", "Other Expense"];
@@ -29,6 +30,7 @@ function formatDate(ms: number) {
 export default function Transactions() {
   const utils = trpc.useUtils();
   const [showForm, setShowForm] = useState(false);
+  const [showImport, setShowImport] = useState(false);
   const [filterType, setFilterType] = useState<"all" | "income" | "expense" | "invoice">("all");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -106,11 +108,27 @@ export default function Transactions() {
           <h1 className="text-lg font-semibold tracking-tight">Transactions</h1>
           <p className="text-sm text-muted-foreground">Record and manage your business transactions</p>
         </div>
-        <Button size="sm" onClick={() => setShowForm(!showForm)}>
-          {showForm ? <X className="h-3.5 w-3.5 mr-1.5" /> : <Plus className="h-3.5 w-3.5 mr-1.5" />}
-          {showForm ? "Cancel" : "Add Transaction"}
-        </Button>
+        <div className="flex gap-2">
+          <Button size="sm" variant="outline" onClick={() => setShowImport(true)}>
+            <Upload className="h-3.5 w-3.5 mr-1.5" />
+            Import File
+          </Button>
+          <Button size="sm" onClick={() => setShowForm(!showForm)}>
+            {showForm ? <X className="h-3.5 w-3.5 mr-1.5" /> : <Plus className="h-3.5 w-3.5 mr-1.5" />}
+            {showForm ? "Cancel" : "Add Transaction"}
+          </Button>
+        </div>
       </div>
+
+      <ImportTransactions
+        open={showImport}
+        onClose={() => setShowImport(false)}
+        onImported={() => {
+          utils.transactions.list.invalidate();
+          utils.transactions.kpis.invalidate();
+          utils.transactions.monthlyTrends.invalidate();
+        }}
+      />
 
       {/* Add form */}
       {showForm && (

@@ -79,3 +79,19 @@
 
 ## Bug Fixes
 - [x] Fix MySQL GROUP BY error in getMonthlyTrends (Dashboard chart fails)
+
+## File Import Feature
+- [x] Install papaparse (CSV) and xlsx (Excel) parsing libraries
+- [x] Backend: tRPC bulkImportTransactions procedure with validation
+- [x] Frontend: drag-and-drop file upload component (CSV, XLSX, JSON)
+- [x] Frontend: auto-detect and map columns (date, description, type, amount)
+- [x] Frontend: preview table showing parsed rows before import
+- [x] Frontend: column mapper UI for non-standard column names
+- [x] Frontend: import result summary (success/skipped/error counts)
+- [x] Import accessible from Transactions page via "Import" button
+
+## File Import Hardening
+- [x] Fix date parser: correct YYYY/MM/DD regex check (isYMD logic bug)
+- [x] Fix duplicate column mapping guard in mapper UI
+- [x] Add Vitest tests for import parser utilities (date, amount, type normalisation)
+- [x] Add integration test for bulkImport tRPC procedure
