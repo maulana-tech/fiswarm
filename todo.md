@@ -54,7 +54,7 @@
 
 ## Deployment
 - [x] Final checkpoint saved
-- [ ] Published live URL (user action required — click Publish in UI)
+- [x] Published live URL (user action required — click Publish in UI)
 
 ## Simulation UX Redesign
 - [x] Simulation page: step-by-step wizard (Step 1: Seed, Step 2: Scenario, Step 3: Launch)
@@ -76,3 +76,6 @@
 - [x] Demo: Indonesian report summary preview
 - [x] Demo page accessible from landing page and sidebar (no login required)
 - [x] Demo banner/badge to distinguish demo mode from real data
+
+## Bug Fixes
+- [x] Fix MySQL GROUP BY error in getMonthlyTrends (Dashboard chart fails)

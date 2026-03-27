@@ -135,18 +135,27 @@ export async function getMonthlyTrends(userId: number, months: number = 6) {
   const db = await getDb();
   if (!db) return [];
   const fromMs = Date.now() - months * 30 * 24 * 60 * 60 * 1000;
-  const monthExpr = sql<string>`DATE_FORMAT(FROM_UNIXTIME(${transactions.transactionDate}/1000), '%Y-%m')`;
-  const rows = await db
-    .select({
-      type: transactions.type,
-      month: monthExpr,
-      total: sql<string>`SUM(${transactions.amount})`,
-    })
-    .from(transactions)
-    .where(and(eq(transactions.userId, userId), gte(transactions.transactionDate, fromMs)))
-    .groupBy(transactions.type, monthExpr)
-    .orderBy(monthExpr);
-  return rows;
+  // Use raw SQL with a named alias so MySQL ONLY_FULL_GROUP_BY mode accepts it.
+  // Drizzle's query builder duplicates the DATE_FORMAT expression in GROUP BY and ORDER BY
+  // as separate string literals, which MySQL rejects under strict mode.
+  const result = await db.execute(sql`
+    SELECT
+      type,
+      DATE_FORMAT(FROM_UNIXTIME(transactionDate / 1000), '%Y-%m') AS month,
+      CAST(SUM(amount) AS CHAR) AS total
+    FROM transactions
+    WHERE userId = ${userId}
+      AND transactionDate >= ${fromMs}
+    GROUP BY type, month
+    ORDER BY month ASC
+  `);
+  // db.execute returns [rows, fields] for mysql2
+  const rows = Array.isArray(result[0]) ? result[0] : (result as unknown as Array<{ type: string; month: string; total: string }>);
+  return (rows as Array<{ type: string; month: string; total: string }>).map((r) => ({
+    type: r.type as "income" | "expense" | "invoice",
+    month: r.month,
+    total: r.total,
+  }));
 }
 
 // ─── Simulations ──────────────────────────────────────────────────────────────
