@@ -12,6 +12,7 @@ import SimulationDetail from "./pages/SimulationDetail";
 import Reports from "./pages/Reports";
 import ReportDetail from "./pages/ReportDetail";
 import Home from "./pages/Home";
+import QuickDemo from "./pages/QuickDemo";
 
 function Router() {
   return (
@@ -51,6 +52,7 @@ function Router() {
           </DashboardLayout>
         )}
       </Route>
+      <Route path="/demo" component={QuickDemo} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

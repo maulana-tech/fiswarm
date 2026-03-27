@@ -28,6 +28,7 @@ import {
   FileText,
   LogOut,
   PanelLeft,
+  Zap,
 } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
@@ -39,6 +40,7 @@ const menuItems = [
   { icon: ArrowLeftRight, label: "Transactions", path: "/transactions" },
   { icon: BrainCircuit, label: "Simulation", path: "/simulation" },
   { icon: FileText, label: "Reports", path: "/reports" },
+  { icon: Zap, label: "Quick Demo", path: "/demo" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "akunfish-sidebar-width";

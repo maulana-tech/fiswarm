@@ -57,12 +57,22 @@
 - [ ] Published live URL (user action required — click Publish in UI)
 
 ## Simulation UX Redesign
-- [ ] Simulation page: step-by-step wizard (Step 1: Seed, Step 2: Scenario, Step 3: Launch)
-- [ ] Simulation page: visual seed preview card with transaction stats
-- [ ] Simulation page: better what-if sliders with live value display and descriptions
-- [ ] Simulation page: agent selection cards with role descriptions
-- [ ] SimulationDetail page: tabbed layout (Forecast / Risk / Agents / Chat / Report)
-- [ ] SimulationDetail page: improved forecast chart with confidence bands
-- [ ] SimulationDetail page: risk alert cards with color-coded severity badges
-- [ ] SimulationDetail page: agent insight cards with avatar/icon per agent
-- [ ] SimulationDetail page: polished chat with agent selector tabs
+- [x] Simulation page: step-by-step wizard (Step 1: Seed, Step 2: Scenario, Step 3: Launch)
+- [x] Simulation page: visual seed preview card with transaction stats
+- [x] Simulation page: better what-if sliders with live value display and descriptions
+- [x] Simulation page: agent selection cards with role descriptions
+- [x] SimulationDetail page: tabbed layout (Forecast / Risk / Agents / Chat / Report)
+- [x] SimulationDetail page: improved forecast chart with confidence bands
+- [x] SimulationDetail page: risk alert cards with color-coded severity badges
+- [x] SimulationDetail page: agent insight cards with avatar/icon per agent
+- [x] SimulationDetail page: polished chat with agent selector tabs
+
+## Quick Demo
+- [x] Quick Demo page with pre-filled sample business data (transactions, KPIs, charts)
+- [x] Demo: Auto Seed Generator preview with sample seed text
+- [x] Demo: What-if scenario sliders with live visual feedback
+- [x] Demo: Swarm simulation results (forecast chart, risk alerts, agent insights)
+- [x] Demo: Chat with Agent sample conversation
+- [x] Demo: Indonesian report summary preview
+- [x] Demo page accessible from landing page and sidebar (no login required)
+- [x] Demo banner/badge to distinguish demo mode from real data

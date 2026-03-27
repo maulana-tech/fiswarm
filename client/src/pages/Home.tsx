@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
-import { ArrowRight, BrainCircuit, BarChart3, ShieldAlert, MessageSquare } from "lucide-react";
+import { ArrowRight, BrainCircuit, BarChart3, ShieldAlert, MessageSquare, Zap } from "lucide-react";
 
 const features = [
   {
@@ -42,6 +42,9 @@ export default function Home() {
           </span>
         </div>
         <div className="flex items-center gap-3">
+          <Button size="sm" variant="outline" onClick={() => setLocation("/demo")} className="gap-1.5 border-primary/30 text-primary hover:bg-primary/10 text-xs">
+            <Zap className="h-3.5 w-3.5" /> Demo
+          </Button>
           {isAuthenticated ? (
             <Button size="sm" onClick={() => setLocation("/dashboard")}>
               Open Dashboard
@@ -79,6 +82,9 @@ export default function Home() {
           )}
           <Button size="lg" variant="outline" onClick={() => setLocation("/simulation")}>
             View Simulation
+          </Button>
+          <Button size="lg" variant="outline" onClick={() => setLocation("/demo")} className="gap-2 border-primary/40 text-primary hover:bg-primary/10">
+            <Zap className="h-4 w-4" /> Quick Demo
           </Button>
         </div>
       </section>
