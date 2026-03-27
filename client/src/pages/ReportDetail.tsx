@@ -1,9 +1,26 @@
 import { trpc } from "@/lib/trpc";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useLocation } from "wouter";
-import { ArrowLeft, Loader2, Printer } from "lucide-react";
+import {
+  ArrowLeft,
+  Loader2,
+  Printer,
+  Presentation,
+  Download,
+  X,
+  ExternalLink,
+} from "lucide-react";
 import { Streamdown } from "streamdown";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface Props { id: number; }
 
@@ -14,10 +31,64 @@ function formatDate(d: Date | number) {
   });
 }
 
+function riskColor(level?: string | null) {
+  if (level === "critical") return "text-red-400 border-red-800 bg-red-950";
+  if (level === "high") return "text-orange-400 border-orange-800 bg-orange-950";
+  if (level === "medium") return "text-yellow-400 border-yellow-800 bg-yellow-950";
+  return "text-green-400 border-green-800 bg-green-950";
+}
+
 export default function ReportDetail({ id }: Props) {
   const [, setLocation] = useLocation();
   const { data: report, isLoading } = trpc.reports.get.useQuery({ id });
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewHtml, setPreviewHtml] = useState<string | null>(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
+  // ── Fetch HTML preview ──────────────────────────────────────────────────────
+  const openPreview = async () => {
+    if (!report) return;
+    setPreviewLoading(true);
+    setPreviewOpen(true);
+    try {
+      const res = await fetch(`/api/pitch-deck/${report.id}?format=html`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const html = await res.text();
+      setPreviewHtml(html);
+    } catch (err) {
+      toast.error("Gagal memuat preview pitch deck");
+      setPreviewOpen(false);
+    } finally {
+      setPreviewLoading(false);
+    }
+  };
+
+  // ── Download PDF ────────────────────────────────────────────────────────────
+  const downloadPDF = async () => {
+    if (!report) return;
+    setDownloading(true);
+    try {
+      const res = await fetch(`/api/pitch-deck/${report.id}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `akunfish-pitchdeck-${report.id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success("Pitch deck berhasil diunduh!");
+    } catch (err) {
+      toast.error("Gagal mengunduh pitch deck. Coba lagi.");
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  // ── Loading / not found ─────────────────────────────────────────────────────
   if (isLoading) {
     return (
       <div className="p-6 flex items-center gap-2 text-muted-foreground">
@@ -32,22 +103,86 @@ export default function ReportDetail({ id }: Props) {
 
   return (
     <div className="p-6 space-y-5 max-w-4xl">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <button onClick={() => setLocation("/reports")} className="text-muted-foreground hover:text-foreground transition-colors">
+
+      {/* ── Header ── */}
+      <div className="flex items-start gap-3">
+        <button
+          onClick={() => setLocation("/reports")}
+          className="text-muted-foreground hover:text-foreground transition-colors mt-1"
+        >
           <ArrowLeft className="h-4 w-4" />
         </button>
-        <div className="flex-1">
-          <h1 className="text-lg font-semibold tracking-tight">{report.title}</h1>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-lg font-semibold tracking-tight">{report.title}</h1>
+          </div>
           <p className="text-xs text-muted-foreground mt-0.5">{formatDate(report.createdAt)}</p>
         </div>
-        <Button size="sm" variant="outline" onClick={() => window.print()}>
-          <Printer className="h-3.5 w-3.5 mr-1.5" />
-          Cetak
-        </Button>
+
+        {/* Action buttons */}
+        <div className="flex items-center gap-2 shrink-0">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => window.print()}
+            className="hidden sm:flex"
+          >
+            <Printer className="h-3.5 w-3.5 mr-1.5" />
+            Cetak
+          </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={openPreview}
+            className="border-primary/40 text-primary hover:bg-primary/10"
+          >
+            <Presentation className="h-3.5 w-3.5 mr-1.5" />
+            Preview Pitch Deck
+          </Button>
+
+          <Button
+            size="sm"
+            onClick={downloadPDF}
+            disabled={downloading}
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            {downloading ? (
+              <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+            ) : (
+              <Download className="h-3.5 w-3.5 mr-1.5" />
+            )}
+            Export PDF
+          </Button>
+        </div>
       </div>
 
-      {/* Summary box */}
+      {/* ── Pitch Deck Info Banner ── */}
+      <Card className="bg-primary/5 border-primary/20">
+        <CardContent className="px-4 py-3">
+          <div className="flex items-start gap-3">
+            <Presentation className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-medium text-primary">Pitch Deck Tersedia</p>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Laporan ini dapat diekspor sebagai pitch deck PDF 9 slide — mencakup KPI, proyeksi cashflow, peringatan risiko, wawasan agen swarm AI, dan rekomendasi strategis dalam Bahasa Indonesia.
+              </p>
+            </div>
+            <div className="flex gap-1.5 shrink-0">
+              <Button size="sm" variant="ghost" className="h-7 text-xs text-primary" onClick={openPreview}>
+                <ExternalLink className="h-3 w-3 mr-1" />
+                Preview
+              </Button>
+              <Button size="sm" variant="ghost" className="h-7 text-xs text-primary" onClick={downloadPDF} disabled={downloading}>
+                {downloading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Download className="h-3 w-3 mr-1" />}
+                Unduh
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ── Executive Summary ── */}
       {report.summary && (
         <Card className="bg-card border-border">
           <CardContent className="px-4 py-3">
@@ -57,7 +192,7 @@ export default function ReportDetail({ id }: Props) {
         </Card>
       )}
 
-      {/* Full report content */}
+      {/* ── Full report content ── */}
       <Card className="bg-card border-border">
         <CardContent className="px-6 py-5">
           <div className="prose prose-sm prose-invert max-w-none
@@ -76,7 +211,7 @@ export default function ReportDetail({ id }: Props) {
         </CardContent>
       </Card>
 
-      {/* Navigation */}
+      {/* ── Navigation ── */}
       <div className="flex gap-2">
         <Button size="sm" variant="outline" onClick={() => setLocation("/reports")}>
           Kembali ke Daftar Laporan
@@ -85,6 +220,58 @@ export default function ReportDetail({ id }: Props) {
           Lihat Simulasi
         </Button>
       </div>
+
+      {/* ── Pitch Deck Preview Modal ── */}
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="max-w-[95vw] w-[1320px] max-h-[92vh] p-0 bg-[#050505] border-border overflow-hidden flex flex-col">
+          <DialogHeader className="px-5 py-3 border-b border-border flex-row items-center justify-between shrink-0">
+            <DialogTitle className="text-sm font-semibold tracking-tight flex items-center gap-2">
+              <Presentation className="h-4 w-4 text-primary" />
+              Preview Pitch Deck — {report.title}
+            </DialogTitle>
+            <div className="flex items-center gap-2">
+              <Button
+                size="sm"
+                onClick={downloadPDF}
+                disabled={downloading}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 h-7 text-xs"
+              >
+                {downloading ? (
+                  <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                ) : (
+                  <Download className="h-3 w-3 mr-1" />
+                )}
+                Unduh PDF
+              </Button>
+              <button
+                onClick={() => setPreviewOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </DialogHeader>
+
+          {/* Slide preview area */}
+          <div className="flex-1 overflow-y-auto bg-[#030303] p-6">
+            {previewLoading ? (
+              <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
+                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                <p className="text-sm">Membangun pitch deck...</p>
+              </div>
+            ) : previewHtml ? (
+              <div className="space-y-4">
+                {/* Render each slide as a scaled iframe-like div */}
+                <div
+                  className="pitch-deck-preview"
+                  style={{ transform: "scale(0.78)", transformOrigin: "top left", width: "128.2%" }}
+                  dangerouslySetInnerHTML={{ __html: previewHtml }}
+                />
+              </div>
+            ) : null}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

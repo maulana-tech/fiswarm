@@ -95,3 +95,13 @@
 - [x] Fix duplicate column mapping guard in mapper UI
 - [x] Add Vitest tests for import parser utilities (date, amount, type normalisation)
 - [x] Add integration test for bulkImport tRPC procedure
+
+## Pitch Deck / PPT Export
+- [x] Backend: LLM generates structured slide content (JSON) from simulation + report data
+- [x] Backend: HTML slide renderer with chart data embedded (bar, area, risk table)
+- [x] Backend: PDF export endpoint via Puppeteer/html-pdf
+- [x] Frontend: "Export as Pitch Deck" button on ReportDetail page
+- [x] Frontend: Slide preview modal before download
+- [x] Slides: Cover, Executive Summary, KPI Overview, Income vs Expense, Cashflow Forecast, Risk Alerts, Agent Insights, Recommendations, Closing
+- [x] All slide content in Bahasa Indonesia
+- [x] Vitest test for slide content structure validation
