@@ -139,8 +139,7 @@ function DashboardLayoutContent({
 
   return (
     <>
-      <div className="relative shrink-0" ref={sidebarRef}>
-        <Sidebar collapsible="icon" className="border-r border-border">
+      <Sidebar ref={sidebarRef as React.Ref<HTMLDivElement>} collapsible="icon" className="border-r border-border">
           {/* Header */}
           <SidebarHeader className="h-14 justify-center border-b border-border">
             <div className="flex items-center gap-3 px-2">
@@ -212,8 +211,6 @@ function DashboardLayoutContent({
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarFooter>
-        </Sidebar>
-
         {/* Resize handle */}
         {!isCollapsed && (
           <div
@@ -222,16 +219,16 @@ function DashboardLayoutContent({
             onMouseDown={() => setIsResizing(true)}
           />
         )}
-      </div>
+      </Sidebar>
 
-      <SidebarInset className="flex-1 min-w-0 w-0">
+      <SidebarInset>
         {isMobile && (
           <div className="flex border-b border-border h-12 items-center px-3 gap-3 bg-background sticky top-0 z-40">
             <SidebarTrigger className="h-8 w-8 rounded" />
             <span className="text-sm font-medium">{activeItem?.label ?? "AkunFish"}</span>
           </div>
         )}
-        <main className="flex-1 w-full overflow-auto">{children}</main>
+        <main className="w-full overflow-auto">{children}</main>
       </SidebarInset>
     </>
   );

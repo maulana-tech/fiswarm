@@ -114,3 +114,6 @@
 
 ## Layout Fix
 - [x] Fix white space on right side of main content area in DashboardLayout
+
+## Reports Page Fix
+- [x] Fix blank space on right side of /reports page
