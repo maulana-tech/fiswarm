@@ -153,3 +153,8 @@
 - [x] Convert ReportDetail page to English
 - [x] Convert QuickDemo page to English
 - [x] Replace all "AkunFish" text references with "FiSwarm"
+
+## GitHub Push & Cleanup
+- [ ] Remove all "MiroFish" mentions from UI text (replace with "Swarm AI Engine")
+- [ ] Remove all "Manus" mentions from UI text
+- [ ] Push project to https://github.com/maulana-tech/iALL-LoveHacks.git

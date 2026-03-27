@@ -350,7 +350,7 @@ export default function Home() {
 
               {/* Sub */}
               <p className="text-white/50 text-lg leading-relaxed mb-10 max-w-md">
-                FiSwarm combines UMKM accounting with MiroFish-powered multi-agent simulation.
+                FiSwarm combines SME accounting with a proprietary multi-agent swarm simulation.
                 Log transactions, run 4-agent AI predictions, and receive full financial reports in Bahasa Indonesia.
               </p>
 
@@ -557,7 +557,7 @@ export default function Home() {
                 <span className="text-white/40">simultaneously.</span>
               </h2>
               <p className="text-white/50 text-base leading-relaxed mb-8">
-                Inspired by the MiroFish architecture, each agent holds a unique perspective on your business.
+                Each agent holds a unique perspective on your business, simulating real-world financial dynamics.
                 They collaborate to produce cashflow projections more accurate than any single-agent analysis.
               </p>
               <button
@@ -681,7 +681,7 @@ export default function Home() {
               <div className="space-y-2">
                 <div className="text-xs text-white/40">LovHacks Season 2</div>
                 <div className="text-xs text-white/40">Category: Fintech UMKM</div>
-                <div className="text-xs text-white/40">Engine: MiroFish</div>
+                <div className="text-xs text-white/40">Engine: FiSwarm AI</div>
                 <div className="inline-flex items-center gap-1.5 mt-2 px-2 py-1 rounded-full border border-[#00d4aa]/20 bg-[#00d4aa]/5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#00d4aa]" />
                   <span className="text-[9px] font-mono text-[#00d4aa]/80">SUBMISSION READY</span>

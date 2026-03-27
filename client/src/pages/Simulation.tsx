@@ -134,7 +134,7 @@ export default function Simulation() {
       <div>
         <h1 className="text-lg font-semibold tracking-tight">Swarm Simulation</h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          Multi-agent cashflow prediction powered by MiroFish swarm intelligence
+          Multi-agent cashflow prediction powered by FiSwarm swarm intelligence
         </p>
       </div>
 

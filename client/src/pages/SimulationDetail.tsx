@@ -220,7 +220,7 @@ export default function SimulationDetail({ id }: Props) {
   const agentMessages: Message[] = [
     {
       role: "system",
-      content: `You are the ${currentAgent.label} agent in a MiroFish swarm simulation for an Indonesian UMKM business.`,
+      content: `You are the ${currentAgent.label} agent in a FiSwarm swarm simulation for an SME business.`,
     },
     ...(logs ?? [])
       .filter((l) => l.agentType === activeAgent)
