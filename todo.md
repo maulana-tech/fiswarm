@@ -121,3 +121,11 @@
 ## ReportDetail Fix
 - [x] Fix blank space on right side of /reports/:id page
 - [x] Fix pitch deck slide preview being cut off in the modal
+
+## Landing Page Redesign
+- [x] Redesign hero section — asymmetric layout, strong headline, clear CTA
+- [x] Fix navigation bar — sticky, correct links, active state, mobile-friendly
+- [x] Add features grid section with icons and descriptions
+- [x] Add how-it-works steps section
+- [x] Add social proof / stats bar
+- [x] Add footer with links
