@@ -139,7 +139,7 @@ function DashboardLayoutContent({
 
   return (
     <>
-      <div className="relative" ref={sidebarRef}>
+      <div className="relative shrink-0" ref={sidebarRef}>
         <Sidebar collapsible="icon" className="border-r border-border">
           {/* Header */}
           <SidebarHeader className="h-14 justify-center border-b border-border">
@@ -224,14 +224,14 @@ function DashboardLayoutContent({
         )}
       </div>
 
-      <SidebarInset>
+      <SidebarInset className="flex-1 min-w-0 w-0">
         {isMobile && (
           <div className="flex border-b border-border h-12 items-center px-3 gap-3 bg-background sticky top-0 z-40">
             <SidebarTrigger className="h-8 w-8 rounded" />
             <span className="text-sm font-medium">{activeItem?.label ?? "AkunFish"}</span>
           </div>
         )}
-        <main className="flex-1 overflow-auto">{children}</main>
+        <main className="flex-1 w-full overflow-auto">{children}</main>
       </SidebarInset>
     </>
   );

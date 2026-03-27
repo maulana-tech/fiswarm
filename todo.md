@@ -111,3 +111,6 @@
 - [x] Fix slide scaling so slides fit correctly inside modal width
 - [x] Remove overflow/body margin from pitch deck HTML template
 - [x] Ensure each slide renders at correct aspect ratio (16:9) in preview
+
+## Layout Fix
+- [x] Fix white space on right side of main content area in DashboardLayout
