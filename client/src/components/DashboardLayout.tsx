@@ -43,7 +43,7 @@ const menuItems = [
   { icon: Zap, label: "Quick Demo", path: "/demo" },
 ];
 
-const SIDEBAR_WIDTH_KEY = "akunfish-sidebar-width";
+const SIDEBAR_WIDTH_KEY = "fiswarm-sidebar-width";
 const DEFAULT_WIDTH = 220;
 const MIN_WIDTH = 180;
 const MAX_WIDTH = 320;
@@ -66,7 +66,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="flex flex-col items-center gap-8 p-8 max-w-sm w-full">
           <div className="text-center">
-            <div className="text-2xl font-bold tracking-tight text-primary mb-1">AkunFish</div>
+            <div className="text-2xl font-bold tracking-tight text-primary mb-1">FiSwarm</div>
             <div className="text-xs text-muted-foreground uppercase tracking-widest mb-6">
               UMKM Financial Intelligence
             </div>
@@ -152,7 +152,7 @@ function DashboardLayoutContent({
               </button>
               {!isCollapsed && (
                 <div className="flex flex-col min-w-0">
-                  <span className="font-bold text-sm tracking-tight text-primary">AkunFish</span>
+                  <span className="font-bold text-sm tracking-tight text-primary">FiSwarm</span>
                   <span className="text-[10px] text-muted-foreground uppercase tracking-widest">
                     Financial Intelligence
                   </span>
@@ -225,7 +225,7 @@ function DashboardLayoutContent({
         {isMobile && (
           <div className="flex border-b border-border h-12 items-center px-3 gap-3 bg-background sticky top-0 z-40">
             <SidebarTrigger className="h-8 w-8 rounded" />
-            <span className="text-sm font-medium">{activeItem?.label ?? "AkunFish"}</span>
+            <span className="text-sm font-medium">{activeItem?.label ?? "FiSwarm"}</span>
           </div>
         )}
         <main className="w-full overflow-auto">{children}</main>

@@ -45,7 +45,7 @@ function SlideCarousel({ html }: { html: string }) {
   })();
 
   if (parsed.length === 0) {
-    return <p className="text-xs text-muted-foreground text-center py-8">Tidak ada slide yang ditemukan.</p>;
+    return <p className="text-xs text-muted-foreground text-center py-8">No slides found.</p>;
   }
 
   return (
@@ -123,7 +123,7 @@ export default function ReportDetail({ id }: Props) {
       const html = await res.text();
       setPreviewHtml(html);
     } catch (err) {
-      toast.error("Gagal memuat preview pitch deck");
+      toast.error("Failed to load pitch deck preview");
       setPreviewOpen(false);
     } finally {
       setPreviewLoading(false);
@@ -141,14 +141,14 @@ export default function ReportDetail({ id }: Props) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `akunfish-pitchdeck-${report.id}.pdf`;
+      a.download = `fiswarm-pitchdeck-${report.id}.pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      toast.success("Pitch deck berhasil diunduh!");
+      toast.success("Pitch deck downloaded!");
     } catch (err) {
-      toast.error("Gagal mengunduh pitch deck. Coba lagi.");
+      toast.error("Failed to download pitch deck. Please try again.");
     } finally {
       setDownloading(false);
     }
@@ -158,13 +158,13 @@ export default function ReportDetail({ id }: Props) {
   if (isLoading) {
     return (
       <div className="p-6 flex items-center gap-2 text-muted-foreground">
-        <Loader2 className="h-4 w-4 animate-spin" /> Memuat laporan...
+        <Loader2 className="h-4 w-4 animate-spin" /> Loading report...
       </div>
     );
   }
 
   if (!report) {
-    return <div className="p-6 text-muted-foreground">Laporan tidak ditemukan.</div>;
+    return <div className="p-6 text-muted-foreground">Report not found.</div>;
   }
 
   return (
@@ -194,7 +194,7 @@ export default function ReportDetail({ id }: Props) {
             className="hidden sm:flex"
           >
             <Printer className="h-3.5 w-3.5 mr-1.5" />
-            Cetak
+            Print
           </Button>
 
           <Button
@@ -229,9 +229,9 @@ export default function ReportDetail({ id }: Props) {
           <div className="flex items-start gap-3">
             <Presentation className="h-4 w-4 text-primary mt-0.5 shrink-0" />
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-medium text-primary">Pitch Deck Tersedia</p>
+              <p className="text-xs font-medium text-primary">Pitch Deck Available</p>
               <p className="text-xs text-muted-foreground mt-0.5">
-                Laporan ini dapat diekspor sebagai pitch deck PDF 9 slide — mencakup KPI, proyeksi cashflow, peringatan risiko, wawasan agen swarm AI, dan rekomendasi strategis dalam Bahasa Indonesia.
+                This report can be exported as a 9-slide PDF pitch deck — covering KPIs, cashflow projections, risk alerts, swarm AI agent insights, and strategic recommendations in Bahasa Indonesia.
               </p>
             </div>
             <div className="flex gap-1.5 shrink-0">
@@ -241,7 +241,7 @@ export default function ReportDetail({ id }: Props) {
               </Button>
               <Button size="sm" variant="ghost" className="h-7 text-xs text-primary" onClick={downloadPDF} disabled={downloading}>
                 {downloading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Download className="h-3 w-3 mr-1" />}
-                Unduh
+                Download
               </Button>
             </div>
           </div>
@@ -252,7 +252,7 @@ export default function ReportDetail({ id }: Props) {
       {report.summary && (
         <Card className="bg-card border-border">
           <CardContent className="px-4 py-3">
-            <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Ringkasan Eksekutif</div>
+            <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Executive Summary</div>
             <p className="text-sm leading-relaxed">{report.summary}</p>
           </CardContent>
         </Card>
@@ -280,10 +280,10 @@ export default function ReportDetail({ id }: Props) {
       {/* ── Navigation ── */}
       <div className="flex gap-2">
         <Button size="sm" variant="outline" onClick={() => setLocation("/reports")}>
-          Kembali ke Daftar Laporan
+          Back to Reports
         </Button>
         <Button size="sm" variant="outline" onClick={() => setLocation(`/simulation/${report.simulationId}`)}>
-          Lihat Simulasi
+          View Simulation
         </Button>
       </div>
 
@@ -307,7 +307,7 @@ export default function ReportDetail({ id }: Props) {
                 ) : (
                   <Download className="h-3 w-3 mr-1" />
                 )}
-                Unduh PDF
+                Download PDF
               </Button>
               <button
                 onClick={() => setPreviewOpen(false)}
@@ -323,7 +323,7 @@ export default function ReportDetail({ id }: Props) {
             {previewLoading ? (
               <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
                 <Loader2 className="h-6 w-6 animate-spin text-primary" />
-                <p className="text-sm">Membangun pitch deck...</p>
+                <p className="text-sm">Building pitch deck...</p>
               </div>
             ) : previewHtml ? (
               <SlideCarousel html={previewHtml} />

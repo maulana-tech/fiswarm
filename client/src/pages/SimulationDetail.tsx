@@ -37,9 +37,9 @@ const AGENTS = [
     bg: "oklch(0.18 0.02 195)",
     border: "oklch(0.30 0.06 195)",
     prompts: [
-      "Bagaimana kondisi cashflow bisnis saya?",
-      "Strategi apa yang bisa meningkatkan pendapatan?",
-      "Apakah saya perlu menambah karyawan?",
+      "What is the current cashflow status of my business?",
+      "What strategies can increase revenue?",
+      "Do I need to hire more employees?",
     ],
   },
   {
@@ -50,9 +50,9 @@ const AGENTS = [
     bg: "oklch(0.18 0.02 55)",
     border: "oklch(0.30 0.06 55)",
     prompts: [
-      "Apakah pembayaran ke supplier tepat waktu?",
-      "Bagaimana kondisi stok dan pengadaan?",
-      "Risiko apa dari sisi rantai pasok?",
+      "Are supplier payments being made on time?",
+      "What is the current stock and procurement status?",
+      "What are the supply chain risks?",
     ],
   },
   {
@@ -63,9 +63,9 @@ const AGENTS = [
     bg: "oklch(0.18 0.02 145)",
     border: "oklch(0.30 0.06 145)",
     prompts: [
-      "Bagaimana tren permintaan pelanggan?",
-      "Apakah harga produk masih kompetitif?",
-      "Faktor apa yang mempengaruhi loyalitas pelanggan?",
+      "What are the current customer demand trends?",
+      "Is the product pricing still competitive?",
+      "What factors affect customer loyalty?",
     ],
   },
   {
@@ -76,9 +76,9 @@ const AGENTS = [
     bg: "oklch(0.18 0.02 280)",
     border: "oklch(0.30 0.06 280)",
     prompts: [
-      "Apakah bisnis ini layak mendapat pinjaman?",
-      "Bagaimana rasio keuangan bisnis ini?",
-      "Apa rekomendasi dari sisi perbankan?",
+      "Is this business eligible for a loan?",
+      "What are the key financial ratios of this business?",
+      "What are the banking recommendations?",
     ],
   },
   {
@@ -89,9 +89,9 @@ const AGENTS = [
     bg: "oklch(0.18 0.02 320)",
     border: "oklch(0.30 0.06 320)",
     prompts: [
-      "Buat ringkasan kondisi keuangan bisnis ini.",
-      "Apa poin-poin utama dari hasil simulasi?",
-      "Berikan rekomendasi tindakan prioritas.",
+      "Summarize the financial condition of this business.",
+      "What are the key takeaways from the simulation?",
+      "Provide a prioritized action plan.",
     ],
   },
 ] as const;
@@ -173,7 +173,7 @@ export default function SimulationDetail({ id }: Props) {
   const reportMutation = trpc.reports.generate.useMutation({
     onSuccess: (data) => {
       utils.reports.list.invalidate();
-      toast.success("Laporan berhasil dibuat!");
+      toast.success("Report generated successfully!");
       setLocation(`/reports/${data.reportId}`);
     },
     onError: (e) => toast.error(e.message),

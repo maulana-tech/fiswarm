@@ -26,14 +26,14 @@ function formatIDR(n: number) {
 
 // ─── Static demo data ────────────────────────────────────────────────────────
 const DEMO_TRANSACTIONS = [
-  { id: 1, date: "2026-01-05", description: "Penjualan Produk A", type: "income",  amount: 8_500_000 },
-  { id: 2, date: "2026-01-08", description: "Pembelian Bahan Baku", type: "expense", amount: 3_200_000 },
-  { id: 3, date: "2026-01-12", description: "Penjualan Produk B", type: "income",  amount: 5_750_000 },
-  { id: 4, date: "2026-01-15", description: "Gaji Karyawan", type: "expense", amount: 4_500_000 },
-  { id: 5, date: "2026-01-20", description: "Invoice Klien XYZ", type: "invoice", amount: 12_000_000 },
-  { id: 6, date: "2026-01-22", description: "Sewa Tempat", type: "expense", amount: 2_000_000 },
-  { id: 7, date: "2026-02-03", description: "Penjualan Online", type: "income",  amount: 9_200_000 },
-  { id: 8, date: "2026-02-10", description: "Pembelian Peralatan", type: "expense", amount: 1_800_000 },
+  { id: 1, date: "2026-01-05", description: "Product A Sales",        type: "income",  amount: 8_500_000 },
+  { id: 2, date: "2026-01-08", description: "Raw Material Purchase",  type: "expense", amount: 3_200_000 },
+  { id: 3, date: "2026-01-12", description: "Product B Sales",        type: "income",  amount: 5_750_000 },
+  { id: 4, date: "2026-01-15", description: "Employee Salaries",      type: "expense", amount: 4_500_000 },
+  { id: 5, date: "2026-01-20", description: "Client XYZ Invoice",     type: "invoice", amount: 12_000_000 },
+  { id: 6, date: "2026-01-22", description: "Office Rent",            type: "expense", amount: 2_000_000 },
+  { id: 7, date: "2026-02-03", description: "Online Store Sales",     type: "income",  amount: 9_200_000 },
+  { id: 8, date: "2026-02-10", description: "Equipment Purchase",     type: "expense", amount: 1_800_000 },
 ];
 
 const DEMO_MONTHLY = [
@@ -45,9 +45,9 @@ const DEMO_MONTHLY = [
   { month: "Feb", income: 26_100_000, expense: 14_900_000 },
 ];
 
-const DEMO_SEED = `=== AKUNFISH BUSINESS SEED ===
+const DEMO_SEED = `=== FISWARM BUSINESS SEED ===
 Period: Sep 2025 – Feb 2026 (6 months)
-Business Type: UMKM Retail / Produk
+Business Type: SME Retail / Products
 
 FINANCIAL SUMMARY:
   Total Income:   Rp 133.35M
@@ -57,16 +57,16 @@ FINANCIAL SUMMARY:
   Avg Monthly Expense: Rp 14.10M
 
 INCOME BREAKDOWN:
-  Penjualan Produk: 68% (Rp 90.7M)
-  Invoice Klien:    22% (Rp 29.3M)
-  Penjualan Online: 10% (Rp 13.4M)
+  Product Sales:   68% (Rp 90.7M)
+  Client Invoices: 22% (Rp 29.3M)
+  Online Sales:    10% (Rp 13.4M)
 
 EXPENSE BREAKDOWN:
-  Gaji Karyawan:    32% (Rp 27.1M)
-  Bahan Baku:       28% (Rp 23.7M)
-  Sewa Tempat:      18% (Rp 15.2M)
-  Peralatan:        12% (Rp 10.2M)
-  Lainnya:          10% (Rp  8.5M)
+  Employee Salaries: 32% (Rp 27.1M)
+  Raw Materials:     28% (Rp 23.7M)
+  Office Rent:       18% (Rp 15.2M)
+  Equipment:         12% (Rp 10.2M)
+  Other:             10% (Rp  8.5M)
 
 TREND: Income +14% MoM growth. Expense stable.
 CASHFLOW HEALTH: Positive. Surplus increasing.`;
@@ -78,7 +78,7 @@ const DEMO_AGENTS = [
     color: "oklch(0.72 0.14 195)",
     bg: "oklch(0.18 0.02 195)",
     border: "oklch(0.30 0.06 195)",
-    insight: "Bisnis menunjukkan pertumbuhan yang konsisten dengan kenaikan pendapatan rata-rata 14% per bulan. Margin keuntungan bersih berada di 36.5%, yang tergolong sehat untuk UMKM retail. Disarankan untuk mengalokasikan 20% surplus untuk ekspansi kapasitas produksi di Q2 2026.",
+    insight: "Business shows consistent growth with average revenue increase of 14% per month. Net profit margin stands at 36.5%, which is healthy for an SME retail operation. Recommended to allocate 20% of surplus toward production capacity expansion in Q2 2026.",
   },
   {
     key: "supplier",
@@ -86,7 +86,7 @@ const DEMO_AGENTS = [
     color: "oklch(0.70 0.12 55)",
     bg: "oklch(0.18 0.02 55)",
     border: "oklch(0.30 0.06 55)",
-    insight: "Pola pembelian bahan baku stabil dan teratur. Tidak ada keterlambatan pembayaran yang terdeteksi. Namun, ketergantungan pada satu kategori bahan baku (68%) menciptakan risiko rantai pasok. Disarankan diversifikasi supplier untuk mengurangi risiko gangguan pasokan.",
+    insight: "Raw material purchasing patterns are stable and regular. No payment delays detected. However, dependence on a single raw material category (68%) creates supply chain risk. Supplier diversification is recommended to reduce disruption risk.",
   },
   {
     key: "customer",
@@ -94,7 +94,7 @@ const DEMO_AGENTS = [
     color: "oklch(0.65 0.12 145)",
     bg: "oklch(0.18 0.02 145)",
     border: "oklch(0.30 0.06 145)",
-    insight: "Permintaan pelanggan meningkat stabil. Segmen penjualan online tumbuh 10% dari total pendapatan — indikasi pergeseran ke digital yang perlu dioptimalkan. Loyalitas pelanggan tinggi berdasarkan pola transaksi berulang. Harga produk masih kompetitif di pasar.",
+    insight: "Customer demand is growing steadily. The online sales segment now accounts for 10% of total revenue — a digital shift that needs to be optimized. Customer loyalty is high based on repeat transaction patterns. Product pricing remains competitive in the market.",
   },
   {
     key: "bank",
@@ -102,65 +102,65 @@ const DEMO_AGENTS = [
     color: "oklch(0.65 0.12 280)",
     bg: "oklch(0.18 0.02 280)",
     border: "oklch(0.30 0.06 280)",
-    insight: "Rasio keuangan bisnis ini tergolong baik: Debt-to-Income rendah, cashflow positif selama 6 bulan berturut-turut. Bisnis ini memenuhi syarat untuk kredit modal kerja hingga Rp 150M dengan bunga preferensial. Rekam jejak pembayaran yang bersih meningkatkan skor kredit.",
+    insight: "This business has strong financial ratios: low Debt-to-Income, positive cashflow for 6 consecutive months. The business qualifies for working capital credit up to Rp 150M at preferential rates. A clean payment track record boosts the credit score.",
   },
 ];
 
 const DEMO_ALERTS = [
   {
     severity: "medium",
-    title: "Konsentrasi Pendapatan Tinggi",
-    description: "68% pendapatan berasal dari satu kategori produk. Diversifikasi produk disarankan untuk mengurangi risiko.",
+    title: "High Revenue Concentration",
+    description: "68% of revenue comes from a single product category. Product diversification is recommended to reduce concentration risk.",
   },
   {
     severity: "low",
-    title: "Cashflow Positif Konsisten",
-    description: "Surplus cashflow meningkat 6 bulan berturut-turut. Bisnis dalam kondisi finansial yang sehat.",
+    title: "Consistent Positive Cashflow",
+    description: "Cashflow surplus has grown for 6 consecutive months. Business is in a healthy financial condition.",
   },
   {
     severity: "high",
-    title: "Invoice Belum Terbayar",
-    description: "Terdapat invoice senilai Rp 12M yang belum terbayar. Risiko likuiditas jangka pendek jika tidak segera ditagih.",
+    title: "Unpaid Invoice Outstanding",
+    description: "There is an outstanding invoice worth Rp 12M. Short-term liquidity risk if not collected promptly.",
   },
 ];
 
-const DEMO_REPORT = `# Laporan Keuangan UMKM
-**Periode:** September 2025 – Februari 2026
-**Dibuat oleh:** AkunFish Swarm Intelligence
+const DEMO_REPORT = `# Financial Report — SME Business
+**Period:** September 2025 – February 2026
+**Generated by:** FiSwarm Swarm Intelligence
 
 ---
 
-## Ringkasan Eksekutif
+## Executive Summary
 
-Bisnis menunjukkan **pertumbuhan yang kuat dan konsisten** selama periode 6 bulan terakhir. Total pendapatan mencapai **Rp 133.35 juta** dengan surplus bersih **Rp 48.75 juta**, mencerminkan margin keuntungan bersih sebesar **36.5%**.
+The business demonstrates **strong and consistent growth** over the past 6-month period. Total revenue reached **Rp 133.35 million** with a net surplus of **Rp 48.75 million**, reflecting a net profit margin of **36.5%**.
 
 ---
 
-## Analisis Cashflow
+## Cashflow Analysis
 
-| Bulan | Pendapatan | Pengeluaran | Net |
-|-------|-----------|-------------|-----|
+| Month | Revenue | Expenses | Net |
+|-------|---------|----------|-----|
 | Sep 2025 | Rp 18.2M | Rp 12.4M | **+Rp 5.8M** |
-| Okt 2025 | Rp 21.5M | Rp 13.8M | **+Rp 7.7M** |
+| Oct 2025 | Rp 21.5M | Rp 13.8M | **+Rp 7.7M** |
 | Nov 2025 | Rp 19.8M | Rp 14.2M | **+Rp 5.6M** |
-| Des 2025 | Rp 24.3M | Rp 15.6M | **+Rp 8.7M** |
+| Dec 2025 | Rp 24.3M | Rp 15.6M | **+Rp 8.7M** |
 | Jan 2026 | Rp 23.5M | Rp 13.7M | **+Rp 9.8M** |
 | Feb 2026 | Rp 26.1M | Rp 14.9M | **+Rp 11.2M** |
 
 ---
 
-## Rekomendasi Strategis
+## Strategic Recommendations
 
-1. **Diversifikasi Produk** — Kurangi ketergantungan pada satu kategori produk utama
-2. **Percepat Penagihan Invoice** — Invoice Rp 12M perlu segera ditagih untuk menjaga likuiditas
-3. **Ekspansi Digital** — Optimalkan kanal penjualan online yang tumbuh 10%
-4. **Cadangan Dana Darurat** — Alokasikan 15% surplus sebagai dana darurat operasional`;
+1. **Diversify Products** — Reduce dependence on a single primary product category
+2. **Accelerate Invoice Collection** — The Rp 12M invoice must be collected promptly to maintain liquidity
+3. **Digital Expansion** — Optimize the online sales channel that has grown 10%
+4. **Emergency Reserve Fund** — Allocate 15% of surplus as an operational emergency reserve`;
 
 const DEMO_CHAT: Array<{ role: "user" | "assistant"; content: string; agent: string }> = [
-  { role: "user", content: "Bagaimana kondisi cashflow bisnis saya?", agent: "owner" },
-  { role: "assistant", content: "Cashflow bisnis Anda dalam kondisi **sangat sehat**. Selama 6 bulan terakhir, surplus bersih meningkat dari Rp 5.8M menjadi Rp 11.2M per bulan — pertumbuhan 93%. Tren ini sangat positif dan menunjukkan bisnis Anda semakin efisien.", agent: "owner" },
-  { role: "user", content: "Apa risiko terbesar dalam 3 bulan ke depan?", agent: "owner" },
-  { role: "assistant", content: "Risiko utama yang perlu diwaspadai:\n\n1. **Invoice belum terbayar** (Rp 12M) — jika tidak tertagih, bisa mengganggu likuiditas\n2. **Konsentrasi produk** — 68% dari satu kategori, rentan terhadap perubahan pasar\n3. **Kenaikan biaya bahan baku** — tren global menunjukkan potensi kenaikan 8-12% di Q2 2026\n\nSaran: prioritaskan penagihan invoice dan mulai diversifikasi lini produk.", agent: "owner" },
+  { role: "user", content: "How is my business cashflow doing?", agent: "owner" },
+  { role: "assistant", content: "Your business cashflow is in **excellent health**. Over the past 6 months, net surplus has grown from Rp 5.8M to Rp 11.2M per month — a 93% increase. This trend is very positive and shows your business is becoming more efficient.", agent: "owner" },
+  { role: "user", content: "What are the biggest risks in the next 3 months?", agent: "owner" },
+  { role: "assistant", content: "Key risks to watch out for:\n\n1. **Unpaid invoice** (Rp 12M) — if not collected, it could disrupt liquidity\n2. **Product concentration** — 68% from one category, vulnerable to market shifts\n3. **Rising raw material costs** — global trends suggest a potential 8-12% increase in Q2 2026\n\nRecommendation: prioritize invoice collection and start diversifying product lines.", agent: "owner" },
 ];
 
 // ─── Risk config ─────────────────────────────────────────────────────────────
@@ -233,15 +233,15 @@ export default function QuickDemo() {
     setIsSending(true);
     setTimeout(() => {
       const responses: Record<string, string> = {
-        owner: "Berdasarkan data simulasi, bisnis Anda berada dalam kondisi yang **sangat baik**. Dengan skenario what-if yang Anda atur (harga +10%, 2 karyawan baru, market growth +15%), proyeksi net cashflow 3 bulan ke depan adalah **positif dan meningkat**. Rekomendasi: lanjutkan strategi ekspansi yang terencana.",
-        supplier: "Dengan penambahan anggaran inventori Rp 3M/bulan, kapasitas stok meningkat sekitar 20%. Pastikan kontrak dengan supplier utama diperpanjang minimal 6 bulan ke depan untuk mengunci harga dan menghindari fluktuasi biaya bahan baku.",
-        customer: "Kenaikan harga 10% masih dalam batas toleransi pelanggan berdasarkan analisis elastisitas harga. Segmen pelanggan loyal (>60%) tidak sensitif terhadap kenaikan harga di bawah 15%. Fokus pada peningkatan nilai produk untuk mempertahankan loyalitas.",
-        bank: "Profil keuangan bisnis ini sangat kuat untuk pengajuan kredit. Dengan cashflow positif konsisten dan rencana ekspansi yang terstruktur, bisnis ini layak mendapat fasilitas kredit investasi dengan plafon hingga Rp 200M.",
-        report: "Ringkasan simulasi: Skenario what-if menunjukkan proyeksi positif dengan total net cashflow 3 bulan sebesar " + formatIDR(totalNet) + ". Risiko utama adalah kenaikan biaya operasional dari penambahan karyawan. Rekomendasi: jalankan ekspansi secara bertahap.",
+        owner: "Based on simulation data, your business is in **excellent condition**. With the what-if scenario you set (price +10%, 2 new employees, market growth +15%), the 3-month net cashflow projection is **positive and growing**. Recommendation: continue with a planned expansion strategy.",
+        supplier: "With an additional inventory budget of Rp 3M/month, stock capacity increases by approximately 20%. Ensure contracts with key suppliers are extended at least 6 months ahead to lock in prices and avoid raw material cost fluctuations.",
+        customer: "A 10% price increase is still within customer tolerance based on price elasticity analysis. The loyal customer segment (>60%) is not sensitive to price increases below 15%. Focus on increasing product value to maintain loyalty.",
+        bank: "This business has a very strong financial profile for credit applications. With consistent positive cashflow and a structured expansion plan, this business qualifies for investment credit facilities up to Rp 200M.",
+        report: "Simulation summary: The what-if scenario shows positive projections with a total 3-month net cashflow of " + formatIDR(totalNet) + ". The main risk is rising operational costs from additional employees. Recommendation: execute expansion gradually.",
       };
       const reply = {
         role: "assistant" as const,
-        content: responses[activeAgent] ?? "Analisis sedang diproses...",
+        content: responses[activeAgent] ?? "Analysis is being processed...",
         agent: activeAgent,
       };
       setChatMessages((prev) => [...prev, reply]);
@@ -253,10 +253,10 @@ export default function QuickDemo() {
   const visibleChat = chatMessages.filter((m) => m.agent === activeAgent);
 
   const kpis = [
-    { label: "Total Pendapatan", value: "Rp 133.4M", sub: "6 bulan terakhir", icon: TrendingUp, color: "text-[oklch(0.65_0.12_145)]", bg: "bg-[oklch(0.18_0.02_145)]/30" },
-    { label: "Total Pengeluaran", value: "Rp 84.6M",  sub: "6 bulan terakhir", icon: TrendingDown, color: "text-[oklch(0.60_0.18_25)]", bg: "bg-[oklch(0.18_0.02_25)]/30" },
-    { label: "Net Cashflow",      value: "Rp 48.8M",  sub: "Surplus positif", icon: Wallet, color: "text-primary", bg: "bg-primary/10" },
-    { label: "Invoice Pending",   value: "Rp 12.0M",  sub: "1 invoice aktif", icon: FileText, color: "text-[oklch(0.70_0.12_55)]", bg: "bg-[oklch(0.18_0.02_55)]/30" },
+    { label: "Total Revenue",     value: "Rp 133.4M", sub: "Last 6 months",    icon: TrendingUp,   color: "text-[oklch(0.65_0.12_145)]", bg: "bg-[oklch(0.18_0.02_145)]/30" },
+    { label: "Total Expenses",    value: "Rp 84.6M",  sub: "Last 6 months",    icon: TrendingDown, color: "text-[oklch(0.60_0.18_25)]",  bg: "bg-[oklch(0.18_0.02_25)]/30" },
+    { label: "Net Cashflow",      value: "Rp 48.8M",  sub: "Positive surplus", icon: Wallet,       color: "text-primary",               bg: "bg-primary/10" },
+    { label: "Pending Invoice",   value: "Rp 12.0M",  sub: "1 active invoice",icon: FileText,     color: "text-[oklch(0.70_0.12_55)]",  bg: "bg-[oklch(0.18_0.02_55)]/30" },
   ];
 
   return (
@@ -266,10 +266,10 @@ export default function QuickDemo() {
         <div className="flex items-center gap-2">
           <Zap className="h-4 w-4 text-primary" />
           <span className="text-xs font-semibold text-primary">DEMO MODE</span>
-          <span className="text-xs text-muted-foreground">— Data sampel, tidak memerlukan login</span>
+          <span className="text-xs text-muted-foreground">— Sample data, no login required</span>
         </div>
-        <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => setLocation("/")}>
-          <ArrowLeft className="h-3.5 w-3.5 mr-1.5" /> Kembali
+          <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => setLocation("/")}>
+          <ArrowLeft className="h-3.5 w-3.5 mr-1.5" /> Back
         </Button>
       </div>
 
@@ -277,14 +277,14 @@ export default function QuickDemo() {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-xl font-bold tracking-tight">AkunFish — Quick Demo</h1>
+            <h1 className="text-xl font-bold tracking-tight">FiSwarm — Quick Demo</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Demo interaktif platform keuangan UMKM dengan Swarm AI. Semua data adalah contoh simulasi.
+              Interactive demo of the SME financial intelligence platform powered by Swarm AI. All data is simulated.
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground border border-border rounded-lg px-3 py-2">
             <Play className="h-3.5 w-3.5 text-primary" />
-            <span>Toko Maju Jaya — Demo Business</span>
+            <span>Maju Jaya Store — Demo Business</span>
           </div>
         </div>
 
@@ -339,7 +339,7 @@ export default function QuickDemo() {
               <Card className="bg-card border-border">
                 <CardContent className="p-4">
                   <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">
-                    Income vs Expense (6 Bulan)
+                    Income vs Expense (6 Months)
                   </div>
                   <ResponsiveContainer width="100%" height={200}>
                     <BarChart data={DEMO_MONTHLY} margin={{ top: 4, right: 4, left: 0, bottom: 0 }} barGap={3}>
@@ -385,18 +385,18 @@ export default function QuickDemo() {
             {/* Transaction table */}
             <Card className="bg-card border-border overflow-hidden">
               <CardContent className="p-0">
-                <div className="px-4 py-3 border-b border-border flex items-center justify-between">
-                  <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Transaksi Terbaru</div>
-                  <span className="text-[10px] text-muted-foreground">8 transaksi</span>
+                  <div className="px-4 py-3 border-b border-border flex items-center justify-between">
+                  <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Recent Transactions</div>
+                  <span className="text-[10px] text-muted-foreground">8 transactions</span>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-border bg-accent/10">
-                        <th className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-4 py-2 text-left">Tanggal</th>
-                        <th className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-4 py-2 text-left">Deskripsi</th>
-                        <th className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-4 py-2 text-left">Tipe</th>
-                        <th className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-4 py-2 text-right">Jumlah</th>
+                        <th className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-4 py-2 text-left">Date</th>
+                        <th className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-4 py-2 text-left">Description</th>
+                        <th className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-4 py-2 text-left">Type</th>
+                        <th className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-4 py-2 text-right">Amount</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -428,7 +428,7 @@ export default function QuickDemo() {
 
             <div className="flex justify-end">
               <Button size="sm" onClick={() => setActiveTab("seed")} className="gap-1.5">
-                Lanjut ke Seed Generator <ArrowRight className="h-3.5 w-3.5" />
+                  Continue to Seed Generator <ArrowRight className="h-3.5 w-3.5" />
               </Button>
             </div>
           </TabsContent>
@@ -443,21 +443,21 @@ export default function QuickDemo() {
                   <span className="ml-auto text-xs text-muted-foreground bg-accent/30 px-2 py-0.5 rounded border border-border">6 months</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Sistem mengekstrak pola keuangan dari 6 bulan data transaksi dan mengkonversinya menjadi seed text terstruktur untuk agen AI.
+                  The system extracts financial patterns from 6 months of transaction data and converts them into structured seed text for AI agents.
                 </p>
 
                 <div className="rounded-lg border border-[oklch(0.30_0.06_145)] bg-[oklch(0.18_0.02_145)]/20 overflow-hidden">
                   <div className="flex items-center justify-between px-4 py-3 border-b border-[oklch(0.30_0.06_145)]/50">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-[oklch(0.65_0.12_145)]" />
-                      <span className="text-xs font-semibold text-[oklch(0.65_0.12_145)]">Seed Berhasil Dibuat</span>
-                      <span className="text-xs text-muted-foreground">— 8 transaksi</span>
+                      <span className="text-xs font-semibold text-[oklch(0.65_0.12_145)]">Seed Generated Successfully</span>
+                      <span className="text-xs text-muted-foreground">— 8 transactions</span>
                     </div>
                     <button
                       onClick={() => setSeedExpanded(!seedExpanded)}
                       className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      {seedExpanded ? "Sembunyikan" : "Lihat Seed Text"}
+                      {seedExpanded ? "Hide" : "View Seed Text"}
                     </button>
                   </div>
                   {seedExpanded && (
@@ -469,9 +469,9 @@ export default function QuickDemo() {
 
                 <div className="grid grid-cols-3 gap-3">
                   {[
-                    { label: "Total Transaksi", value: "8" },
-                    { label: "Periode Data", value: "6 Bulan" },
-                    { label: "Kategori", value: "3 Tipe" },
+                    { label: "Total Transactions", value: "8" },
+                    { label: "Data Period", value: "6 Months" },
+                    { label: "Categories", value: "3 Types" },
                   ].map((stat) => (
                     <div key={stat.label} className="rounded-lg border border-border bg-accent/10 p-3 text-center">
                       <div className="text-base font-bold text-primary tabular-nums">{stat.value}</div>
@@ -481,7 +481,7 @@ export default function QuickDemo() {
                 </div>
 
                 <Button size="sm" className="w-full gap-1.5" onClick={() => setActiveTab("whatif")}>
-                  Lanjut ke What-if Scenarios <ArrowRight className="h-3.5 w-3.5" />
+                  Continue to What-if Scenarios <ArrowRight className="h-3.5 w-3.5" />
                 </Button>
               </CardContent>
             </Card>
@@ -495,7 +495,7 @@ export default function QuickDemo() {
                   <SlidersHorizontal className="h-4 w-4 text-primary" />
                   <span className="text-sm font-semibold">What-if Scenario Parameters</span>
                   <span className="ml-auto text-xs text-[oklch(0.70_0.12_55)] bg-[oklch(0.18_0.02_55)]/30 px-2 py-0.5 rounded border border-[oklch(0.30_0.06_55)]">
-                    Skenario Aktif
+                    Active Scenario
                   </span>
                 </div>
 
@@ -504,7 +504,7 @@ export default function QuickDemo() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <TrendingUp className="h-3.5 w-3.5 text-muted-foreground" />
-                      <span className="text-sm font-medium">Perubahan Harga</span>
+                      <span className="text-sm font-medium">Price Change</span>
                     </div>
                     <span className={`text-sm font-bold tabular-nums ${priceChange > 0 ? "text-[oklch(0.65_0.12_145)]" : priceChange < 0 ? "text-destructive" : "text-muted-foreground"}`}>
                       {priceChange > 0 ? "+" : ""}{priceChange}%
@@ -512,8 +512,8 @@ export default function QuickDemo() {
                   </div>
                   <Slider value={[priceChange]} onValueChange={([v]) => setPriceChange(v)} min={-30} max={50} step={5} />
                   <div className="flex justify-between text-[10px] text-muted-foreground">
-                    <span className="text-destructive/70">−30% (turun harga)</span>
-                    <span className="text-[oklch(0.65_0.12_145)]/70">+50% (naik harga)</span>
+                    <span className="text-destructive/70">−30% (price drop)</span>
+                    <span className="text-[oklch(0.65_0.12_145)]/70">+50% (price increase)</span>
                   </div>
                 </div>
 
@@ -522,15 +522,15 @@ export default function QuickDemo() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                      <span className="text-sm font-medium">Tambah Karyawan</span>
+                      <span className="text-sm font-medium">Add Employees</span>
                     </div>
                     <div className="text-right">
-                      <span className="text-sm font-bold tabular-nums">{employeeCount} orang</span>
-                      {employeeCount > 0 && <div className="text-[10px] text-destructive/80">+{formatIDR(employeeCount * 3_500_000)}/bulan</div>}
+                      <span className="text-sm font-bold tabular-nums">{employeeCount} person{employeeCount !== 1 ? "s" : ""}</span>
+                      {employeeCount > 0 && <div className="text-[10px] text-destructive/80">+{formatIDR(employeeCount * 3_500_000)}/month</div>}
                     </div>
                   </div>
                   <Slider value={[employeeCount]} onValueChange={([v]) => setEmployeeCount(v)} min={0} max={10} step={1} />
-                  <div className="flex justify-between text-[10px] text-muted-foreground"><span>0 karyawan</span><span>10 karyawan</span></div>
+                  <div className="flex justify-between text-[10px] text-muted-foreground"><span>0 employees</span><span>10 employees</span></div>
                 </div>
 
                 {/* Inventory */}
@@ -538,7 +538,7 @@ export default function QuickDemo() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <RefreshCw className="h-3.5 w-3.5 text-muted-foreground" />
-                      <span className="text-sm font-medium">Tambah Inventori / Bulan</span>
+                      <span className="text-sm font-medium">Additional Inventory / Month</span>
                     </div>
                     <span className="text-sm font-bold tabular-nums">{formatIDR(inventoryBudget)}</span>
                   </div>
@@ -551,19 +551,19 @@ export default function QuickDemo() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <BarChart3 className="h-3.5 w-3.5 text-muted-foreground" />
-                      <span className="text-sm font-medium">Asumsi Pertumbuhan Pasar</span>
+                      <span className="text-sm font-medium">Market Growth Assumption</span>
                     </div>
                     <span className={`text-sm font-bold tabular-nums ${marketGrowth > 0 ? "text-[oklch(0.65_0.12_145)]" : marketGrowth < 0 ? "text-destructive" : "text-muted-foreground"}`}>
                       {marketGrowth > 0 ? "+" : ""}{marketGrowth}%
                     </span>
                   </div>
                   <Slider value={[marketGrowth]} onValueChange={([v]) => setMarketGrowth(v)} min={-20} max={30} step={5} />
-                  <div className="flex justify-between text-[10px] text-muted-foreground"><span className="text-destructive/70">−20% (kontraksi)</span><span className="text-[oklch(0.65_0.12_145)]/70">+30% (pertumbuhan)</span></div>
+                  <div className="flex justify-between text-[10px] text-muted-foreground"><span className="text-destructive/70">−20% (contraction)</span><span className="text-[oklch(0.65_0.12_145)]/70">+30% (growth)</span></div>
                 </div>
 
                 {/* Live preview */}
                 <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
-                  <div className="text-xs font-medium text-primary mb-3">Proyeksi Langsung (3 Bulan)</div>
+                  <div className="text-xs font-medium text-primary mb-3">Live Projection (3 Months)</div>
                   <div className="grid grid-cols-3 gap-3">
                     {adjustedForecast.map((row) => (
                       <div key={row.month} className="text-center">
@@ -576,7 +576,7 @@ export default function QuickDemo() {
                     ))}
                   </div>
                   <div className="mt-3 pt-3 border-t border-primary/20 flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">Total 3 bulan:</span>
+                    <span className="text-xs text-muted-foreground">3-month total:</span>
                     <span className={`text-sm font-bold tabular-nums ${totalNet >= 0 ? "text-primary" : "text-destructive"}`}>
                       {totalNet >= 0 ? "+" : ""}{formatIDR(totalNet)}
                     </span>
@@ -584,7 +584,7 @@ export default function QuickDemo() {
                 </div>
 
                 <Button size="sm" className="w-full gap-1.5" onClick={() => setActiveTab("forecast")}>
-                  Lihat Forecast Lengkap <ArrowRight className="h-3.5 w-3.5" />
+                  View Full Forecast <ArrowRight className="h-3.5 w-3.5" />
                 </Button>
               </CardContent>
             </Card>
@@ -594,10 +594,10 @@ export default function QuickDemo() {
           <TabsContent value="forecast" className="space-y-4">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { label: "Total Proyeksi Pendapatan", value: formatIDR(adjustedForecast.reduce((s,r)=>s+r.income,0)), color: "text-[oklch(0.65_0.12_145)]" },
-                { label: "Total Proyeksi Pengeluaran", value: formatIDR(adjustedForecast.reduce((s,r)=>s+r.expense,0)), color: "text-[oklch(0.60_0.18_25)]" },
-                { label: "Net Cashflow 3 Bulan", value: (totalNet>=0?"+":"")+formatIDR(totalNet), color: totalNet>=0?"text-primary":"text-destructive" },
-                { label: "Rata-rata Confidence", value: "82%", color: "text-muted-foreground" },
+                { label: "Projected Revenue",   value: formatIDR(adjustedForecast.reduce((s,r)=>s+r.income,0)), color: "text-[oklch(0.65_0.12_145)]" },
+                { label: "Projected Expenses",   value: formatIDR(adjustedForecast.reduce((s,r)=>s+r.expense,0)), color: "text-[oklch(0.60_0.18_25)]" },
+                { label: "3-Month Net Cashflow", value: (totalNet>=0?"+":"")+formatIDR(totalNet), color: totalNet>=0?"text-primary":"text-destructive" },
+                { label: "Avg Confidence",        value: "82%", color: "text-muted-foreground" },
               ].map((k) => (
                 <Card key={k.label} className="bg-card border-border">
                   <CardContent className="p-4">
@@ -611,7 +611,7 @@ export default function QuickDemo() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <Card className="bg-card border-border">
                 <CardContent className="p-4">
-                  <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">Proyeksi Income vs Expense</div>
+                  <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">Projected Income vs Expense</div>
                   <ResponsiveContainer width="100%" height={200}>
                     <BarChart data={adjustedForecast} margin={{ top: 4, right: 4, left: 0, bottom: 0 }} barGap={3}>
                       <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.22 0.006 240)" vertical={false} />
@@ -656,7 +656,7 @@ export default function QuickDemo() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border bg-accent/10">
-                      {["Bulan","Pendapatan","Pengeluaran","Net","Confidence"].map((h,i) => (
+                      {["Month","Revenue","Expenses","Net","Confidence"].map((h,i) => (
                         <th key={h} className={`text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-4 py-2.5 ${i===0?"text-left":"text-right"}`}>{h}</th>
                       ))}
                     </tr>
@@ -777,7 +777,7 @@ export default function QuickDemo() {
             <div className="flex items-center gap-3 px-4 py-2.5 rounded-lg border text-xs" style={{ borderColor: currentAgent.border, background: currentAgent.bg + "44", color: currentAgent.color }}>
               <div className="w-5 h-5 rounded flex items-center justify-center font-bold text-[10px]" style={{ background: currentAgent.border }}>{currentAgent.label[0]}</div>
               <span className="font-semibold">{currentAgent.label} Agent</span>
-              <span className="text-muted-foreground ml-auto text-[10px]">Demo — respons instan</span>
+                      <span className="text-muted-foreground ml-auto text-[10px]">Demo — instant responses</span>
             </div>
 
             {/* Messages */}
@@ -786,7 +786,7 @@ export default function QuickDemo() {
                 <div className="h-80 overflow-y-auto p-4 space-y-3">
                   {visibleChat.length === 0 && (
                     <div className="h-full flex items-center justify-center text-xs text-muted-foreground">
-                      Mulai percakapan dengan {currentAgent.label} Agent
+                      Start a conversation with the {currentAgent.label} Agent
                     </div>
                   )}
                   {visibleChat.map((msg, i) => (
@@ -816,19 +816,19 @@ export default function QuickDemo() {
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleDemoChat()}
-                    placeholder={`Tanya ${currentAgent.label} agent...`}
+                    placeholder={`Ask the ${currentAgent.label} agent...`}
                     className="flex-1 bg-background border border-border rounded-lg px-3 py-2 text-xs outline-none focus:border-primary/50 transition-colors"
                   />
                   <Button size="sm" onClick={handleDemoChat} disabled={isSending || !chatInput.trim()}>
-                    Kirim
+                    Send
                   </Button>
                 </div>
                 {/* Suggested prompts */}
                 <div className="px-3 pb-3 flex flex-wrap gap-1.5">
                   {[
-                    "Bagaimana kondisi cashflow?",
-                    "Apa risiko terbesar?",
-                    "Rekomendasi untuk ekspansi?",
+                    "How is the cashflow?",
+                    "What are the biggest risks?",
+                    "Recommendations for expansion?",
                   ].map((p) => (
                     <button
                       key={p}
@@ -849,11 +849,11 @@ export default function QuickDemo() {
               <CardContent className="p-0">
                 <div className="flex items-center justify-between px-5 py-4 border-b border-border bg-accent/10">
                   <div>
-                    <div className="text-sm font-semibold">Laporan Keuangan UMKM</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Sep 2025 – Feb 2026 · Dibuat oleh AkunFish AI</div>
+                    <div className="text-sm font-semibold">SME Financial Report</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Sep 2025 – Feb 2026 · Generated by FiSwarm AI</div>
                   </div>
                   <span className="text-[10px] px-2 py-1 rounded border border-[oklch(0.30_0.06_145)] bg-[oklch(0.18_0.02_145)]/40 text-[oklch(0.65_0.12_145)] font-medium">
-                    SELESAI
+                    COMPLETE
                   </span>
                 </div>
                 <div className="p-5 prose prose-sm prose-invert max-w-none">

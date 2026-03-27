@@ -1,5 +1,5 @@
 /**
- * pitchDeck.ts — Server-side pitch deck generator for AkunFish
+ * pitchDeck.ts — Server-side pitch deck generator for FiSwarm
  *
  * Generates a 9-slide HTML presentation from simulation + report data,
  * then renders it to PDF using Puppeteer with the system Chromium binary.
@@ -8,7 +8,7 @@
  *   1. Cover
  *   2. Ringkasan Eksekutif
  *   3. KPI Keuangan
- *   4. Tren Pendapatan vs Pengeluaran (bar chart via SVG)
+ *   4. Tren Revenue vs Expenses (bar chart via SVG)
  *   5. Proyeksi Cashflow (area chart via SVG)
  *   6. Peringatan Risiko
  *   7. Wawasan Agen Swarm
@@ -80,10 +80,10 @@ function severityColor(s: string): string {
 }
 
 function severityLabel(s: string): string {
-  if (s === "critical") return "KRITIS";
-  if (s === "high") return "TINGGI";
-  if (s === "medium") return "SEDANG";
-  return "RENDAH";
+  if (s === "critical") return "CRITICAL";
+  if (s === "high") return "HIGH";
+  if (s === "medium") return "MEDIUM";
+  return "LOW";
 }
 
 function riskLevelColor(r: string): string {
@@ -128,8 +128,8 @@ function buildBarChart(forecast: ForecastMonth[]): string {
 
   return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:220px">
     ${yLines}${bars}
-    <text x="${PAD + 8}" y="16" font-size="10" fill="#00d4aa">■ Pendapatan</text>
-    <text x="${PAD + 110}" y="16" font-size="10" fill="#ff6b6b">■ Pengeluaran</text>
+    <text x="${PAD + 8}" y="16" font-size="10" fill="#00d4aa">■ Revenue</text>
+    <text x="${PAD + 110}" y="16" font-size="10" fill="#ff6b6b">■ Expenses</text>
   </svg>`;
 }
 
@@ -192,7 +192,7 @@ function slide(index: number, total: number, content: string, accent = "#00d4aa"
   <div class="slide" id="slide-${index}">
     <div class="slide-number">${index} / ${total}</div>
     ${content}
-    <div class="slide-footer">AkunFish — UMKM Financial Intelligence</div>
+    <div class="slide-footer">FiSwarm — SME Financial Intelligence</div>
   </div>`;
 }
 
@@ -210,42 +210,42 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
   // ── Slide 1: Cover ──────────────────────────────────────────────────────────
   const s1 = slide(1, TOTAL, `
     <div class="cover-slide">
-      <div class="cover-badge">LAPORAN KEUANGAN BISNIS</div>
+      <div class="cover-badge">BUSINESS FINANCIAL REPORT</div>
       <h1 class="cover-title">${businessName}</h1>
       <p class="cover-subtitle">${reportTitle}</p>
       <div class="cover-meta">
-        <span>Dibuat: ${generatedDate}</span>
+        <span>Generated: ${generatedDate}</span>
         <span class="sep">|</span>
-        <span>Proyeksi: ${forecastMonths} Bulan</span>
+        <span>Forecast: ${forecastMonths} Bulan</span>
         <span class="sep">|</span>
-        <span style="color:${riskLevelColor(riskLevel)}">Risiko: ${riskLevel.toUpperCase()}</span>
+        <span style="color:${riskLevelColor(riskLevel)}">Risk: ${riskLevel.toUpperCase()}</span>
       </div>
-      <div class="cover-brand">AkunFish · Swarm AI Financial Intelligence</div>
+      <div class="cover-brand">FiSwarm · Swarm AI Financial Intelligence</div>
     </div>
   `);
 
   // ── Slide 2: Ringkasan Eksekutif ────────────────────────────────────────────
   const s2 = slide(2, TOTAL, `
     <div class="content-slide">
-      <div class="slide-label">02 — RINGKASAN EKSEKUTIF</div>
-      <h2 class="slide-title">Gambaran Umum Keuangan</h2>
+      <div class="slide-label">02 — EXECUTIVE SUMMARY</div>
+      <h2 class="slide-title">Financial Overview</h2>
       <div class="exec-summary">${executiveSummary.replace(/\n/g, "<br/>")}</div>
       <div class="kpi-row">
         <div class="kpi-mini">
           <div class="kpi-mini-val" style="color:#00d4aa">${formatIDR(kpis.totalIncome)}</div>
-          <div class="kpi-mini-label">Total Proyeksi Pendapatan</div>
+          <div class="kpi-mini-label">Total Projected Revenue</div>
         </div>
         <div class="kpi-mini">
           <div class="kpi-mini-val" style="color:#ff6b6b">${formatIDR(kpis.totalExpense)}</div>
-          <div class="kpi-mini-label">Total Proyeksi Pengeluaran</div>
+          <div class="kpi-mini-label">Total Projected Expenses</div>
         </div>
         <div class="kpi-mini">
           <div class="kpi-mini-val" style="color:${kpis.netCashflow >= 0 ? "#00d4aa" : "#ff6b6b"}">${formatIDR(kpis.netCashflow)}</div>
-          <div class="kpi-mini-label">Net Cashflow Proyeksi</div>
+          <div class="kpi-mini-label">Projected Net Cashflow</div>
         </div>
         <div class="kpi-mini">
           <div class="kpi-mini-val" style="color:#a78bfa">${kpis.avgConfidence.toFixed(0)}%</div>
-          <div class="kpi-mini-label">Rata-rata Kepercayaan AI</div>
+          <div class="kpi-mini-label">Avg AI Confidence</div>
         </div>
       </div>
     </div>
@@ -254,23 +254,23 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
   // ── Slide 3: KPI Overview ───────────────────────────────────────────────────
   const s3 = slide(3, TOTAL, `
     <div class="content-slide">
-      <div class="slide-label">03 — INDIKATOR KINERJA KEUANGAN</div>
-      <h2 class="slide-title">KPI Utama Bisnis</h2>
+      <div class="slide-label">03 — KEY FINANCIAL INDICATORS</div>
+      <h2 class="slide-title">Key Business KPIs</h2>
       <div class="kpi-grid">
         <div class="kpi-card">
           <div class="kpi-icon" style="background:#00d4aa22;color:#00d4aa">↑</div>
           <div class="kpi-val" style="color:#00d4aa">${formatIDR(kpis.avgMonthlyIncome)}</div>
-          <div class="kpi-lbl">Rata-rata Pendapatan/Bulan</div>
+          <div class="kpi-lbl">Avg Revenue/Month</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-icon" style="background:#ff6b6b22;color:#ff6b6b">↓</div>
           <div class="kpi-val" style="color:#ff6b6b">${formatIDR(kpis.avgMonthlyExpense)}</div>
-          <div class="kpi-lbl">Rata-rata Pengeluaran/Bulan</div>
+          <div class="kpi-lbl">Avg Expenses/Month</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-icon" style="background:${kpis.netCashflow >= 0 ? "#00d4aa22" : "#ff6b6b22"};color:${kpis.netCashflow >= 0 ? "#00d4aa" : "#ff6b6b"}">≈</div>
           <div class="kpi-val" style="color:${kpis.netCashflow >= 0 ? "#00d4aa" : "#ff6b6b"}">${formatIDR(kpis.netCashflow / Math.max(forecastMonths, 1))}</div>
-          <div class="kpi-lbl">Net Cashflow/Bulan</div>
+          <div class="kpi-lbl">Net Cashflow/Month</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-icon" style="background:#a78bfa22;color:#a78bfa">AI</div>
@@ -295,12 +295,12 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
   const s4 = slide(4, TOTAL, `
     <div class="content-slide">
       <div class="slide-label">04 — ANALISIS PENDAPATAN & PENGELUARAN</div>
-      <h2 class="slide-title">Tren Bulanan: Pendapatan vs Pengeluaran</h2>
+      <h2 class="slide-title">Tren Bulanan: Revenue vs Expenses</h2>
       <div class="chart-wrap">${barChart}</div>
       <div class="chart-insight">
-        <span style="color:#00d4aa">▲ Pendapatan tertinggi:</span>
+        <span style="color:#00d4aa">▲ Revenue tertinggi:</span>
         ${formatIDR(Math.max(...forecast.map((f) => f.income)))} &nbsp;|&nbsp;
-        <span style="color:#ff6b6b">▼ Pengeluaran tertinggi:</span>
+        <span style="color:#ff6b6b">▼ Expenses tertinggi:</span>
         ${formatIDR(Math.max(...forecast.map((f) => f.expense)))}
       </div>
     </div>
@@ -309,12 +309,12 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
   // ── Slide 5: Cashflow Forecast Area Chart ───────────────────────────────────
   const s5 = slide(5, TOTAL, `
     <div class="content-slide">
-      <div class="slide-label">05 — PROYEKSI CASHFLOW</div>
+      <div class="slide-label">05 — CASHFLOW PROJECTION</div>
       <h2 class="slide-title">Net Cashflow ${forecastMonths} Bulan ke Depan</h2>
       <div class="chart-wrap">${areaChart}</div>
       <div class="forecast-table">
         <table>
-          <thead><tr><th>Bulan</th><th>Pendapatan</th><th>Pengeluaran</th><th>Net</th><th>Kepercayaan</th></tr></thead>
+          <thead><tr><th>Bulan</th><th>Revenue</th><th>Expenses</th><th>Net</th><th>Kepercayaan</th></tr></thead>
           <tbody>
             ${forecast.map((f) => `
               <tr>
@@ -337,10 +337,10 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
   // ── Slide 6: Risk Alerts ────────────────────────────────────────────────────
   const s6 = slide(6, TOTAL, `
     <div class="content-slide">
-      <div class="slide-label">06 — PERINGATAN RISIKO</div>
+      <div class="slide-label">06 — RISK ALERTS</div>
       <h2 class="slide-title">Identifikasi Risiko Bisnis</h2>
       ${riskAlerts.length === 0
-        ? `<div class="no-risk">Tidak ada peringatan risiko yang terdeteksi. Kondisi keuangan dalam keadaan baik.</div>`
+        ? `<div class="no-risk">No risk alerts yang terdeteksi. Kondisi keuangan dalam keadaan baik.</div>`
         : `<div class="risk-list">
           ${riskAlerts.map((a) => `
             <div class="risk-item" style="border-left:3px solid ${severityColor(a.severity)}">
@@ -358,16 +358,16 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
 
   // ── Slide 7: Agent Insights ─────────────────────────────────────────────────
   const agentList = [
-    { key: "owner", label: "Pemilik Bisnis", color: "#00d4aa", icon: "O" },
+    { key: "owner", label: "Owner", color: "#00d4aa", icon: "O" },
     { key: "supplier", label: "Supplier", color: "#a78bfa", icon: "S" },
-    { key: "customer", label: "Pelanggan", color: "#fbbf24", icon: "C" },
-    { key: "bank", label: "Bank / Keuangan", color: "#60a5fa", icon: "B" },
+    { key: "customer", label: "Customer", color: "#fbbf24", icon: "C" },
+    { key: "bank", label: "Bank", color: "#60a5fa", icon: "B" },
   ] as const;
 
   const s7 = slide(7, TOTAL, `
     <div class="content-slide">
-      <div class="slide-label">07 — WAWASAN AGEN SWARM AI</div>
-      <h2 class="slide-title">Perspektif Multi-Agen MiroFish</h2>
+      <div class="slide-label">07 — SWARM AGENT INSIGHTS AI</div>
+      <h2 class="slide-title">Multi-Agent Perspectives MiroFish</h2>
       <div class="agent-grid">
         ${agentList.map((a) => `
           <div class="agent-card" style="border-top:2px solid ${a.color}">
@@ -385,7 +385,7 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
   // ── Slide 8: Recommendations ────────────────────────────────────────────────
   const s8 = slide(8, TOTAL, `
     <div class="content-slide">
-      <div class="slide-label">08 — REKOMENDASI STRATEGIS</div>
+      <div class="slide-label">08 — STRATEGIC RECOMMENDATIONS</div>
       <h2 class="slide-title">Langkah Aksi yang Disarankan</h2>
       <div class="rec-list">
         ${recommendations.map((r, i) => `
@@ -401,17 +401,17 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
   // ── Slide 9: Closing ────────────────────────────────────────────────────────
   const s9 = slide(9, TOTAL, `
     <div class="cover-slide">
-      <div class="cover-badge">TERIMA KASIH</div>
-      <h1 class="cover-title" style="font-size:2.4rem">Laporan ini dibuat secara otomatis oleh AkunFish</h1>
+      <div class="cover-badge">THANK YOU</div>
+      <h1 class="cover-title" style="font-size:2.4rem">This report was automatically generated by FiSwarm</h1>
       <p class="cover-subtitle">Didukung oleh teknologi Swarm AI MiroFish — simulasi multi-agen untuk prediksi keuangan UMKM Indonesia yang akurat dan actionable.</p>
       <div class="cover-meta">
         <span>${businessName}</span>
         <span class="sep">|</span>
         <span>${generatedDate}</span>
         <span class="sep">|</span>
-        <span style="color:${riskLevelColor(riskLevel)}">Risiko: ${riskLevel.toUpperCase()}</span>
+        <span style="color:${riskLevelColor(riskLevel)}">Risk: ${riskLevel.toUpperCase()}</span>
       </div>
-      <div class="cover-brand">AkunFish · UMKM Financial Intelligence</div>
+      <div class="cover-brand">FiSwarm · SME Financial Intelligence</div>
     </div>
   `);
 

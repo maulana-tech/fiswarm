@@ -140,3 +140,16 @@
 - [x] Testimonial / trust section
 - [x] Final CTA section with gradient border card
 - [x] Footer: multi-column with product links
+
+## Rebrand to FiSwarm + English Conversion
+- [x] Rename app title from AkunFish to FiSwarm (index.html, package.json, VITE_APP_TITLE)
+- [x] Convert Home.tsx landing page to English
+- [x] Convert DashboardLayout sidebar nav items to English
+- [x] Convert Dashboard page to English
+- [x] Convert Transactions page to English
+- [x] Convert Simulation page to English
+- [x] Convert SimulationDetail page to English
+- [x] Convert Reports page to English
+- [x] Convert ReportDetail page to English
+- [x] Convert QuickDemo page to English
+- [x] Replace all "AkunFish" text references with "FiSwarm"
