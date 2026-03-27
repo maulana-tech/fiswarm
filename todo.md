@@ -105,3 +105,9 @@
 - [x] Slides: Cover, Executive Summary, KPI Overview, Income vs Expense, Cashflow Forecast, Risk Alerts, Agent Insights, Recommendations, Closing
 - [x] All slide content in Bahasa Indonesia
 - [x] Vitest test for slide content structure validation
+
+## Pitch Deck Preview Fix
+- [x] Fix white space on right side of preview modal
+- [x] Fix slide scaling so slides fit correctly inside modal width
+- [x] Remove overflow/body margin from pitch deck HTML template
+- [x] Ensure each slide renders at correct aspect ratio (16:9) in preview

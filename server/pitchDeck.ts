@@ -427,15 +427,18 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
+  html, body {
     font-family: 'Inter', sans-serif;
     background: #050505;
     color: #e8e8e8;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
 
   .slide {
     width: 1280px;
-    min-height: 720px;
+    height: 720px;
     background: #0a0a0a;
     border: 1px solid #1a1a1a;
     position: relative;
@@ -444,6 +447,7 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    box-sizing: border-box;
   }
 
   .slide::before {

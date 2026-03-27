@@ -22,6 +22,59 @@ import { Streamdown } from "streamdown";
 import { useState } from "react";
 import { toast } from "sonner";
 
+// ── SlideCarousel: renders each .slide div from pitch deck HTML as a proper 16:9 preview
+function SlideCarousel({ html }: { html: string }) {
+  // Parse the full HTML and extract each slide's outer HTML + the <style> block
+  const parsed = (() => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const styleEl = doc.querySelector("style");
+    const styleText = styleEl ? styleEl.outerHTML : "";
+    const slides = Array.from(doc.querySelectorAll(".slide"));
+    return slides.map((s) => ({
+      id: s.id,
+      outerHTML: s.outerHTML,
+    })).map((s) => ({
+      ...s,
+      // Wrap each slide in a minimal HTML doc with the shared styles
+      doc: `<!DOCTYPE html><html><head><meta charset="UTF-8">${styleText}<style>
+        html,body{margin:0;padding:0;background:#0a0a0a;overflow:hidden;}
+        .slide{width:1280px;min-height:720px;page-break-after:unset;}
+      </style></head><body>${s.outerHTML}</body></html>`,
+    }));
+  })();
+
+  if (parsed.length === 0) {
+    return <p className="text-xs text-muted-foreground text-center py-8">Tidak ada slide yang ditemukan.</p>;
+  }
+
+  return (
+    <div className="space-y-3">
+      {parsed.map((slide, i) => (
+        <div key={slide.id} className="relative">
+          {/* Slide number label */}
+          <div className="text-xs text-muted-foreground mb-1.5 font-mono tracking-wider">
+            SLIDE {i + 1} / {parsed.length}
+          </div>
+          {/* 16:9 aspect ratio container */}
+          <div
+            className="relative w-full overflow-hidden rounded border border-border bg-[#0a0a0a]"
+            style={{ paddingBottom: "56.25%" /* 9/16 = 56.25% */ }}
+          >
+            <iframe
+              srcDoc={slide.doc}
+              title={`Slide ${i + 1}`}
+              className="absolute inset-0 w-full h-full border-0"
+              style={{ transformOrigin: "top left" }}
+              sandbox="allow-same-origin"
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 interface Props { id: number; }
 
 function formatDate(d: Date | number) {
@@ -223,11 +276,11 @@ export default function ReportDetail({ id }: Props) {
 
       {/* ── Pitch Deck Preview Modal ── */}
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="max-w-[95vw] w-[1320px] max-h-[92vh] p-0 bg-[#050505] border-border overflow-hidden flex flex-col">
+        <DialogContent className="max-w-[92vw] w-[960px] max-h-[90vh] p-0 bg-[#0a0a0a] border-border overflow-hidden flex flex-col">
           <DialogHeader className="px-5 py-3 border-b border-border flex-row items-center justify-between shrink-0">
             <DialogTitle className="text-sm font-semibold tracking-tight flex items-center gap-2">
               <Presentation className="h-4 w-4 text-primary" />
-              Preview Pitch Deck — {report.title}
+              Preview Pitch Deck
             </DialogTitle>
             <div className="flex items-center gap-2">
               <Button
@@ -252,22 +305,15 @@ export default function ReportDetail({ id }: Props) {
             </div>
           </DialogHeader>
 
-          {/* Slide preview area */}
-          <div className="flex-1 overflow-y-auto bg-[#030303] p-6">
+          {/* Slide preview area — each slide rendered as a 16:9 scaled card */}
+          <div className="flex-1 overflow-y-auto bg-[#050505] p-5 space-y-4">
             {previewLoading ? (
               <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
                 <Loader2 className="h-6 w-6 animate-spin text-primary" />
                 <p className="text-sm">Membangun pitch deck...</p>
               </div>
             ) : previewHtml ? (
-              <div className="space-y-4">
-                {/* Render each slide as a scaled iframe-like div */}
-                <div
-                  className="pitch-deck-preview"
-                  style={{ transform: "scale(0.78)", transformOrigin: "top left", width: "128.2%" }}
-                  dangerouslySetInnerHTML={{ __html: previewHtml }}
-                />
-              </div>
+              <SlideCarousel html={previewHtml} />
             ) : null}
           </div>
         </DialogContent>
