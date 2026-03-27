@@ -135,16 +135,17 @@ export async function getMonthlyTrends(userId: number, months: number = 6) {
   const db = await getDb();
   if (!db) return [];
   const fromMs = Date.now() - months * 30 * 24 * 60 * 60 * 1000;
+  const monthExpr = sql<string>`DATE_FORMAT(FROM_UNIXTIME(${transactions.transactionDate}/1000), '%Y-%m')`;
   const rows = await db
     .select({
       type: transactions.type,
-      month: sql<string>`DATE_FORMAT(FROM_UNIXTIME(${transactions.transactionDate}/1000), '%Y-%m')`,
+      month: monthExpr,
       total: sql<string>`SUM(${transactions.amount})`,
     })
     .from(transactions)
     .where(and(eq(transactions.userId, userId), gte(transactions.transactionDate, fromMs)))
-    .groupBy(transactions.type, sql`DATE_FORMAT(FROM_UNIXTIME(${transactions.transactionDate}/1000), '%Y-%m')`)
-    .orderBy(sql`DATE_FORMAT(FROM_UNIXTIME(${transactions.transactionDate}/1000), '%Y-%m')`);
+    .groupBy(transactions.type, monthExpr)
+    .orderBy(monthExpr);
   return rows;
 }
 

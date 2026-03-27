@@ -53,5 +53,16 @@
 - [x] All 16 tests passing
 
 ## Deployment
-- [ ] Final checkpoint saved
-- [ ] Published live URL
+- [x] Final checkpoint saved
+- [ ] Published live URL (user action required — click Publish in UI)
+
+## Simulation UX Redesign
+- [ ] Simulation page: step-by-step wizard (Step 1: Seed, Step 2: Scenario, Step 3: Launch)
+- [ ] Simulation page: visual seed preview card with transaction stats
+- [ ] Simulation page: better what-if sliders with live value display and descriptions
+- [ ] Simulation page: agent selection cards with role descriptions
+- [ ] SimulationDetail page: tabbed layout (Forecast / Risk / Agents / Chat / Report)
+- [ ] SimulationDetail page: improved forecast chart with confidence bands
+- [ ] SimulationDetail page: risk alert cards with color-coded severity badges
+- [ ] SimulationDetail page: agent insight cards with avatar/icon per agent
+- [ ] SimulationDetail page: polished chat with agent selector tabs
