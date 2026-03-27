@@ -129,3 +129,14 @@
 - [x] Add how-it-works steps section
 - [x] Add social proof / stats bar
 - [x] Add footer with links
+
+## Fintech Landing Page Redesign
+- [x] Hero: full-viewport with radial glow, sharp headline, dashboard mockup preview
+- [x] Nav: glassmorphism sticky bar with logo, links, and CTA pill
+- [x] Stats ticker bar with animated numbers
+- [x] Bento feature grid (mixed card sizes, code/data snippets inside cards)
+- [x] How-it-works: horizontal timeline with connector lines
+- [x] Agent cards: dark cards with colored borders and role badges
+- [x] Testimonial / trust section
+- [x] Final CTA section with gradient border card
+- [x] Footer: multi-column with product links
