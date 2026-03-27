@@ -64,8 +64,21 @@ function SlideCarousel({ html }: { html: string }) {
             <iframe
               srcDoc={slide.doc}
               title={`Slide ${i + 1}`}
-              className="absolute inset-0 w-full h-full border-0"
-              style={{ transformOrigin: "top left" }}
+              className="absolute inset-0 border-0"
+              style={{
+                width: "1280px",
+                height: "720px",
+                transformOrigin: "top left",
+                transform: "scale(var(--slide-scale, 1))",
+              }}
+              onLoad={(e) => {
+                // Scale the 1280x720 slide to fit the container width
+                const container = (e.target as HTMLIFrameElement).parentElement;
+                if (container) {
+                  const scale = container.clientWidth / 1280;
+                  (e.target as HTMLIFrameElement).style.transform = `scale(${scale})`;
+                }
+              }}
               sandbox="allow-same-origin"
             />
           </div>
@@ -155,7 +168,7 @@ export default function ReportDetail({ id }: Props) {
   }
 
   return (
-    <div className="p-6 space-y-5 max-w-4xl">
+    <div className="p-6 space-y-5 w-full">
 
       {/* ── Header ── */}
       <div className="flex items-start gap-3">
@@ -276,7 +289,7 @@ export default function ReportDetail({ id }: Props) {
 
       {/* ── Pitch Deck Preview Modal ── */}
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="max-w-[92vw] w-[960px] max-h-[90vh] p-0 bg-[#0a0a0a] border-border overflow-hidden flex flex-col">
+        <DialogContent className="max-w-[96vw] w-[1100px] max-h-[94vh] p-0 bg-[#0a0a0a] border-border overflow-hidden flex flex-col">
           <DialogHeader className="px-5 py-3 border-b border-border flex-row items-center justify-between shrink-0">
             <DialogTitle className="text-sm font-semibold tracking-tight flex items-center gap-2">
               <Presentation className="h-4 w-4 text-primary" />

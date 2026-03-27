@@ -117,3 +117,7 @@
 
 ## Reports Page Fix
 - [x] Fix blank space on right side of /reports page
+
+## ReportDetail Fix
+- [x] Fix blank space on right side of /reports/:id page
+- [x] Fix pitch deck slide preview being cut off in the modal
