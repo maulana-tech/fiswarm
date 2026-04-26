@@ -158,3 +158,14 @@
 - [ ] Remove all "MiroFish" mentions from UI text (replace with "Swarm AI Engine")
 - [ ] Remove all "Manus" mentions from UI text
 - [ ] Push project to https://github.com/maulana-tech/iALL-LoveHacks.git
+
+## Pitch Deck Download Error Fix
+- [x] Debug and fix "Failed to download pitch deck" error
+- [x] Verify Puppeteer PDF rendering works correctly
+- [x] Test download functionality end-to-end
+
+## Branding Update: LOVHACKS → AI Agent Sol
+- [x] Replace "LOVHACKS SEASON 2" with "AI Agent Sol" in all UI text
+- [x] Update landing page hero and footer branding
+- [x] Update sidebar and page headers
+- [x] Update pitch deck branding

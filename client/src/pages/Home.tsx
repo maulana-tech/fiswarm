@@ -338,7 +338,7 @@ export default function Home() {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#00d4aa]/30 bg-[#00d4aa]/5 text-[#00d4aa] text-xs font-mono mb-8">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#00d4aa] animate-pulse" />
-                LOVHACKS SEASON 2 — SWARM AI FOR UMKM
+                AI AGENT SOL — SWARM AI FOR UMKM
               </div>
 
               {/* Headline */}
@@ -374,7 +374,7 @@ export default function Home() {
 
               {/* Trust line */}
               <p className="mt-8 text-white/25 text-xs font-mono">
-                BUILT FOR LOVHACKS SEASON 2 · SWARM INTELLIGENCE · OPEN SOURCE
+                BUILT FOR AI AGENT SOL · SWARM INTELLIGENCE · OPEN SOURCE
               </p>
             </div>
 
@@ -644,7 +644,7 @@ export default function Home() {
               </div>
               <p className="text-xs text-white/30 leading-relaxed">
                 UMKM Financial Intelligence Platform.<br />
-                Built for LovHacks Season 2.
+                Built for AI Agent Sol.
               </p>
             </div>
 
@@ -679,7 +679,7 @@ export default function Home() {
             <div>
               <div className="text-[10px] font-mono text-white/30 tracking-widest mb-3">HACKATHON</div>
               <div className="space-y-2">
-                <div className="text-xs text-white/40">LovHacks Season 2</div>
+                <div className="text-xs text-white/40">AI Agent Sol</div>
                 <div className="text-xs text-white/40">Category: Fintech UMKM</div>
                 <div className="text-xs text-white/40">Engine: FiSwarm AI</div>
                 <div className="inline-flex items-center gap-1.5 mt-2 px-2 py-1 rounded-full border border-[#00d4aa]/20 bg-[#00d4aa]/5">
@@ -692,7 +692,7 @@ export default function Home() {
 
           {/* Bottom bar */}
           <div className="border-t border-white/[0.06] pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-            <p className="text-[11px] text-white/20 font-mono">© 2026 FISWARM · BUILT FOR LOVHACKS SEASON 2</p>
+            <p className="text-[11px] text-white/20 font-mono">© 2026 FISWARM · BUILT FOR AI AGENT SOL</p>
             <p className="text-[11px] text-white/20 font-mono">POWERED BY MIROFISH SWARM ENGINE · LLM MULTI-AGENT</p>
           </div>
         </div>

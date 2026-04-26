@@ -834,7 +834,7 @@ ${s1}${s2}${s3}${s4}${s5}${s6}${s7}${s8}${s9}
 
 export async function renderPitchDeckToPDF(html: string): Promise<Buffer> {
   const browser = await puppeteer.launch({
-    executablePath: "/usr/bin/chromium-browser",
+    executablePath: "/usr/bin/chromium",
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
