@@ -16,6 +16,7 @@ import {
   ArrowRight, Play,
 } from "lucide-react";
 import { Streamdown } from "streamdown";
+import { trpc } from "@/lib/trpc";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 function formatUSD(n: number) {
@@ -247,6 +248,32 @@ export default function QuickDemo() {
       setChatMessages((prev) => [...prev, reply]);
       setIsSending(false);
     }, 1200);
+  };
+
+  const exportMutation = trpc.reports.generateDemoPitchDeck.useMutation();
+  const handleExportPitchDeck = async () => {
+    try {
+      const pdfBuffer = await exportMutation.mutateAsync({
+        businessName: "Maju Jaya Store",
+        reportTitle: "SME Financial Report",
+        seedText: DEMO_SEED,
+        forecastMonths: 3,
+        forecast: adjustedForecast,
+        riskLevel: "low",
+      });
+      if (!pdfBuffer) throw new Error("No PDF data received");
+      const arrayBuffer = pdfBuffer instanceof ArrayBuffer ? pdfBuffer : (pdfBuffer as any).buffer || pdfBuffer;
+      const blob = new Blob([arrayBuffer], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "fiswarm-demo-pitchdeck.pdf";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Pitch deck export failed:", err);
+      alert("Failed to export pitch deck. Please try again.");
+    }
   };
 
   const currentAgent = DEMO_AGENTS.find((a) => a.key === activeAgent) ?? DEMO_AGENTS[0];
@@ -845,6 +872,17 @@ export default function QuickDemo() {
 
           {/* ── TAB: Report ────────────────────────────────────────────────── */}
           <TabsContent value="report" className="space-y-4">
+            <div className="flex gap-2 justify-end">
+              <Button 
+                onClick={() => handleExportPitchDeck()} 
+                variant="outline" 
+                size="sm"
+                className="gap-2"
+              >
+                <FileText className="h-4 w-4" />
+                Export Pitch Deck
+              </Button>
+            </div>
             <Card className="bg-card border-border overflow-hidden">
               <CardContent className="p-0">
                 <div className="flex items-center justify-between px-5 py-4 border-b border-border bg-accent/10">

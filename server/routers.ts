@@ -20,6 +20,7 @@ import {
   getReportById,
 } from "./db";
 import { invokeLLM } from "./_core/llm";
+import { renderPitchDeckToPDF, buildPitchDeckHTML } from "./pitchDeck";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function formatUSD(amount: number) {
@@ -597,6 +598,63 @@ Gunakan bahasa yang mudah dipahami oleh pemilik UMKM. Sertakan angka spesifik da
           riskLevel: sim.riskLevel,
           alerts,
         };
+      }),
+
+    generateDemoPitchDeck: publicProcedure
+      .input(z.object({
+        businessName: z.string(),
+        reportTitle: z.string(),
+        seedText: z.string(),
+        forecastMonths: z.number(),
+        forecast: z.array(z.object({
+          month: z.string(),
+          income: z.number(),
+          expense: z.number(),
+          net: z.number(),
+          confidence: z.number(),
+        })),
+        riskLevel: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const totalIncome = input.forecast.reduce((s: number, m: any) => s + m.income, 0);
+        const totalExpense = input.forecast.reduce((s: number, m: any) => s + m.expense, 0);
+        const avgConfidence = Math.round(input.forecast.reduce((s: number, m: any) => s + m.confidence, 0) / input.forecast.length);
+        
+        const html = buildPitchDeckHTML({
+          businessName: input.businessName,
+          reportTitle: input.reportTitle,
+          generatedDate: new Date().toISOString().split('T')[0],
+          seedText: input.seedText,
+          forecastMonths: input.forecastMonths,
+          forecast: input.forecast,
+          riskLevel: input.riskLevel,
+          riskAlerts: [
+            { severity: "low", title: "Seasonal Variation", description: "Monitor inventory levels during peak seasons" },
+            { severity: "medium", title: "Cash Conversion", description: "Optimize invoice collection timing" },
+          ],
+          agentInsights: {
+            owner: "Business shows strong growth potential with consistent positive cashflow",
+            supplier: "Reliable payment history supports favorable supplier terms",
+            customer: "Market demand remains stable with good customer retention",
+            bank: "Strong financial profile qualifies for credit facilities",
+          },
+          executiveSummary: `${input.businessName} demonstrates solid financial health with projected positive cashflow of ${formatUSD(totalIncome - totalExpense)} over ${input.forecastMonths} months.`,
+          recommendations: [
+            "Maintain current operational efficiency",
+            "Monitor market conditions quarterly",
+            "Build cash reserves for contingencies",
+          ],
+          kpis: {
+            totalIncome,
+            totalExpense,
+            netCashflow: totalIncome - totalExpense,
+            avgMonthlyIncome: totalIncome / input.forecastMonths,
+            avgMonthlyExpense: totalExpense / input.forecastMonths,
+            avgConfidence,
+          },
+        });
+        const pdfBuffer = await renderPitchDeckToPDF(html);
+        return pdfBuffer;
       }),
   }),
 });

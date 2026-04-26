@@ -177,3 +177,9 @@
 - [x] Update demo data to use USD amounts
 - [x] Verify all UI text is in English (verified in Dashboard and Quick Demo)
 - [x] Convert all Indonesian text to English (reports, labels, descriptions)
+
+## Quick Demo Pitch Deck Export Feature
+- [x] Add "Export Pitch Deck" button to Quick Demo reports tab
+- [x] Generate pitch deck PDF from demo data
+- [x] Enable download functionality for demo pitch deck
+- [x] Test end-to-end pitch deck export in Quick Demo
