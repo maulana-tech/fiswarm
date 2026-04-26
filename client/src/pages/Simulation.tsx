@@ -15,10 +15,10 @@ import {
   RefreshCw, ChevronDown, ChevronUp,
 } from "lucide-react";
 
-function formatIDR(n: number) {
-  if (Math.abs(n) >= 1_000_000) return `Rp ${(n / 1_000_000).toFixed(1)}M`;
-  if (Math.abs(n) >= 1_000) return `Rp ${(n / 1_000).toFixed(0)}K`;
-  return `Rp ${n.toFixed(0)}`;
+function formatUSD(n: number) {
+  if (Math.abs(n) >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (Math.abs(n) >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
+  return `$${n.toFixed(0)}`;
 }
 
 const STEPS = [
@@ -322,7 +322,7 @@ export default function Simulation() {
                       </span>
                       {employeeCount > 0 && (
                         <div className="text-[10px] text-destructive/80">
-                          +{formatIDR(employeeCount * 3_500_000)}/bulan
+                          +{formatUSD(employeeCount * 3_500_000)}/bulan
                         </div>
                       )}
                     </div>
@@ -340,11 +340,11 @@ export default function Simulation() {
                       <Package className="h-3.5 w-3.5 text-muted-foreground" />
                       <Label className="text-sm font-medium">Additional Inventory / Month</Label>
                     </div>
-                    <span className="text-sm font-semibold tabular-nums text-foreground">{formatIDR(inventoryBudget)}</span>
+                    <span className="text-sm font-semibold tabular-nums text-foreground">{formatUSD(inventoryBudget)}</span>
                   </div>
                   <Slider value={[inventoryBudget]} onValueChange={([v]) => setInventoryBudget(v)} min={0} max={20_000_000} step={500_000} />
                   <div className="flex justify-between text-[10px] text-muted-foreground">
-                    <span>Rp 0</span><span>Rp 20M</span>
+                    <span>$0</span><span>$20M</span>
                   </div>
                 </div>
 
@@ -385,7 +385,7 @@ export default function Simulation() {
                       )}
                       {inventoryBudget > 0 && (
                         <span className="text-xs px-2 py-1 rounded border border-border text-muted-foreground bg-accent/30">
-                          Inventory +{formatIDR(inventoryBudget)}/mo
+                          Inventory +{formatUSD(inventoryBudget)}/mo
                         </span>
                       )}
                       {marketGrowth !== 0 && (

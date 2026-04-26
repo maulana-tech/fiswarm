@@ -169,3 +169,11 @@
 - [x] Update landing page hero and footer branding
 - [x] Update sidebar and page headers
 - [x] Update pitch deck branding
+
+## Currency & Language Update: IDR → USD, Full English
+- [x] Replace all "Rp" currency format with "$" (USD)
+- [x] Update formatIDR function to formatUSD
+- [x] Update pitch deck to use USD currency
+- [x] Update demo data to use USD amounts
+- [x] Verify all UI text is in English (verified in Dashboard and Quick Demo)
+- [x] Convert all Indonesian text to English (reports, labels, descriptions)

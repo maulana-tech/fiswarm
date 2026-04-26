@@ -18,10 +18,10 @@ import {
 import { Streamdown } from "streamdown";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
-function formatIDR(n: number) {
-  if (Math.abs(n) >= 1_000_000) return `Rp ${(n / 1_000_000).toFixed(1)}M`;
-  if (Math.abs(n) >= 1_000) return `Rp ${(n / 1_000).toFixed(0)}K`;
-  return `Rp ${n.toFixed(0)}`;
+function formatUSD(n: number) {
+  if (Math.abs(n) >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (Math.abs(n) >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
+  return `$${n.toFixed(0)}`;
 }
 
 // ─── Static demo data ────────────────────────────────────────────────────────
@@ -50,23 +50,23 @@ Period: Sep 2025 – Feb 2026 (6 months)
 Business Type: SME Retail / Products
 
 FINANCIAL SUMMARY:
-  Total Income:   Rp 133.35M
-  Total Expense:  Rp 84.60M
-  Net Cashflow:   Rp 48.75M
-  Avg Monthly Income:  Rp 22.23M
-  Avg Monthly Expense: Rp 14.10M
+  Total Income:   $133.35M
+  Total Expense:  $84.60M
+  Net Cashflow:   $48.75M
+  Avg Monthly Income:  $22.23M
+  Avg Monthly Expense: $14.10M
 
 INCOME BREAKDOWN:
-  Product Sales:   68% (Rp 90.7M)
-  Client Invoices: 22% (Rp 29.3M)
-  Online Sales:    10% (Rp 13.4M)
+  Product Sales:   68% ($90.7M)
+  Client Invoices: 22% ($29.3M)
+  Online Sales:    10% ($13.4M)
 
 EXPENSE BREAKDOWN:
-  Employee Salaries: 32% (Rp 27.1M)
-  Raw Materials:     28% (Rp 23.7M)
-  Office Rent:       18% (Rp 15.2M)
-  Equipment:         12% (Rp 10.2M)
-  Other:             10% (Rp  8.5M)
+  Employee Salaries: 32% ($27.1M)
+  Raw Materials:     28% ($23.7M)
+  Office Rent:       18% ($15.2M)
+  Equipment:         12% ($10.2M)
+  Other:             10% ($ 8.5M)
 
 TREND: Income +14% MoM growth. Expense stable.
 CASHFLOW HEALTH: Positive. Surplus increasing.`;
@@ -102,7 +102,7 @@ const DEMO_AGENTS = [
     color: "oklch(0.65 0.12 280)",
     bg: "oklch(0.18 0.02 280)",
     border: "oklch(0.30 0.06 280)",
-    insight: "This business has strong financial ratios: low Debt-to-Income, positive cashflow for 6 consecutive months. The business qualifies for working capital credit up to Rp 150M at preferential rates. A clean payment track record boosts the credit score.",
+    insight: "This business has strong financial ratios: low Debt-to-Income, positive cashflow for 6 consecutive months. The business qualifies for working capital credit up to $150M at preferential rates. A clean payment track record boosts the credit score.",
   },
 ];
 
@@ -120,7 +120,7 @@ const DEMO_ALERTS = [
   {
     severity: "high",
     title: "Unpaid Invoice Outstanding",
-    description: "There is an outstanding invoice worth Rp 12M. Short-term liquidity risk if not collected promptly.",
+    description: "There is an outstanding invoice worth $12M. Short-term liquidity risk if not collected promptly.",
   },
 ];
 
@@ -132,7 +132,7 @@ const DEMO_REPORT = `# Financial Report — SME Business
 
 ## Executive Summary
 
-The business demonstrates **strong and consistent growth** over the past 6-month period. Total revenue reached **Rp 133.35 million** with a net surplus of **Rp 48.75 million**, reflecting a net profit margin of **36.5%**.
+The business demonstrates **strong and consistent growth** over the past 6-month period. Total revenue reached **$133.35 million** with a net surplus of **$48.75 million**, reflecting a net profit margin of **36.5%**.
 
 ---
 
@@ -140,27 +140,27 @@ The business demonstrates **strong and consistent growth** over the past 6-month
 
 | Month | Revenue | Expenses | Net |
 |-------|---------|----------|-----|
-| Sep 2025 | Rp 18.2M | Rp 12.4M | **+Rp 5.8M** |
-| Oct 2025 | Rp 21.5M | Rp 13.8M | **+Rp 7.7M** |
-| Nov 2025 | Rp 19.8M | Rp 14.2M | **+Rp 5.6M** |
-| Dec 2025 | Rp 24.3M | Rp 15.6M | **+Rp 8.7M** |
-| Jan 2026 | Rp 23.5M | Rp 13.7M | **+Rp 9.8M** |
-| Feb 2026 | Rp 26.1M | Rp 14.9M | **+Rp 11.2M** |
+| Sep 2025 | $18.2M | $12.4M | **+$5.8M** |
+| Oct 2025 | $21.5M | $13.8M | **+$7.7M** |
+| Nov 2025 | $19.8M | $14.2M | **+$5.6M** |
+| Dec 2025 | $24.3M | $15.6M | **+$8.7M** |
+| Jan 2026 | $23.5M | $13.7M | **+$9.8M** |
+| Feb 2026 | $26.1M | $14.9M | **+$11.2M** |
 
 ---
 
 ## Strategic Recommendations
 
 1. **Diversify Products** — Reduce dependence on a single primary product category
-2. **Accelerate Invoice Collection** — The Rp 12M invoice must be collected promptly to maintain liquidity
+2. **Accelerate Invoice Collection** — The $12M invoice must be collected promptly to maintain liquidity
 3. **Digital Expansion** — Optimize the online sales channel that has grown 10%
 4. **Emergency Reserve Fund** — Allocate 15% of surplus as an operational emergency reserve`;
 
 const DEMO_CHAT: Array<{ role: "user" | "assistant"; content: string; agent: string }> = [
   { role: "user", content: "How is my business cashflow doing?", agent: "owner" },
-  { role: "assistant", content: "Your business cashflow is in **excellent health**. Over the past 6 months, net surplus has grown from Rp 5.8M to Rp 11.2M per month — a 93% increase. This trend is very positive and shows your business is becoming more efficient.", agent: "owner" },
+  { role: "assistant", content: "Your business cashflow is in **excellent health**. Over the past 6 months, net surplus has grown from $5.8M to $11.2M per month — a 93% increase. This trend is very positive and shows your business is becoming more efficient.", agent: "owner" },
   { role: "user", content: "What are the biggest risks in the next 3 months?", agent: "owner" },
-  { role: "assistant", content: "Key risks to watch out for:\n\n1. **Unpaid invoice** (Rp 12M) — if not collected, it could disrupt liquidity\n2. **Product concentration** — 68% from one category, vulnerable to market shifts\n3. **Rising raw material costs** — global trends suggest a potential 8-12% increase in Q2 2026\n\nRecommendation: prioritize invoice collection and start diversifying product lines.", agent: "owner" },
+  { role: "assistant", content: "Key risks to watch out for:\n\n1. **Unpaid invoice** ($12M) — if not collected, it could disrupt liquidity\n2. **Product concentration** — 68% from one category, vulnerable to market shifts\n3. **Rising raw material costs** — global trends suggest a potential 8-12% increase in Q2 2026\n\nRecommendation: prioritize invoice collection and start diversifying product lines.", agent: "owner" },
 ];
 
 // ─── Risk config ─────────────────────────────────────────────────────────────
@@ -180,7 +180,7 @@ function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: 
       {payload.map((p) => (
         <div key={p.name} className="flex items-center justify-between gap-4">
           <span style={{ color: p.color }}>{p.name}</span>
-          <span className="font-semibold tabular-nums" style={{ color: p.color }}>{formatIDR(p.value)}</span>
+          <span className="font-semibold tabular-nums" style={{ color: p.color }}>{formatUSD(p.value)}</span>
         </div>
       ))}
     </div>
@@ -234,10 +234,10 @@ export default function QuickDemo() {
     setTimeout(() => {
       const responses: Record<string, string> = {
         owner: "Based on simulation data, your business is in **excellent condition**. With the what-if scenario you set (price +10%, 2 new employees, market growth +15%), the 3-month net cashflow projection is **positive and growing**. Recommendation: continue with a planned expansion strategy.",
-        supplier: "With an additional inventory budget of Rp 3M/month, stock capacity increases by approximately 20%. Ensure contracts with key suppliers are extended at least 6 months ahead to lock in prices and avoid raw material cost fluctuations.",
+        supplier: "With an additional inventory budget of $3M/month, stock capacity increases by approximately 20%. Ensure contracts with key suppliers are extended at least 6 months ahead to lock in prices and avoid raw material cost fluctuations.",
         customer: "A 10% price increase is still within customer tolerance based on price elasticity analysis. The loyal customer segment (>60%) is not sensitive to price increases below 15%. Focus on increasing product value to maintain loyalty.",
-        bank: "This business has a very strong financial profile for credit applications. With consistent positive cashflow and a structured expansion plan, this business qualifies for investment credit facilities up to Rp 200M.",
-        report: "Simulation summary: The what-if scenario shows positive projections with a total 3-month net cashflow of " + formatIDR(totalNet) + ". The main risk is rising operational costs from additional employees. Recommendation: execute expansion gradually.",
+        bank: "This business has a very strong financial profile for credit applications. With consistent positive cashflow and a structured expansion plan, this business qualifies for investment credit facilities up to $200M.",
+        report: "Simulation summary: The what-if scenario shows positive projections with a total 3-month net cashflow of " + formatUSD(totalNet) + ". The main risk is rising operational costs from additional employees. Recommendation: execute expansion gradually.",
       };
       const reply = {
         role: "assistant" as const,
@@ -253,10 +253,10 @@ export default function QuickDemo() {
   const visibleChat = chatMessages.filter((m) => m.agent === activeAgent);
 
   const kpis = [
-    { label: "Total Revenue",     value: "Rp 133.4M", sub: "Last 6 months",    icon: TrendingUp,   color: "text-[oklch(0.65_0.12_145)]", bg: "bg-[oklch(0.18_0.02_145)]/30" },
-    { label: "Total Expenses",    value: "Rp 84.6M",  sub: "Last 6 months",    icon: TrendingDown, color: "text-[oklch(0.60_0.18_25)]",  bg: "bg-[oklch(0.18_0.02_25)]/30" },
-    { label: "Net Cashflow",      value: "Rp 48.8M",  sub: "Positive surplus", icon: Wallet,       color: "text-primary",               bg: "bg-primary/10" },
-    { label: "Pending Invoice",   value: "Rp 12.0M",  sub: "1 active invoice",icon: FileText,     color: "text-[oklch(0.70_0.12_55)]",  bg: "bg-[oklch(0.18_0.02_55)]/30" },
+    { label: "Total Revenue",     value: "$133.4M", sub: "Last 6 months",    icon: TrendingUp,   color: "text-[oklch(0.65_0.12_145)]", bg: "bg-[oklch(0.18_0.02_145)]/30" },
+    { label: "Total Expenses",    value: "$84.6M",  sub: "Last 6 months",    icon: TrendingDown, color: "text-[oklch(0.60_0.18_25)]",  bg: "bg-[oklch(0.18_0.02_25)]/30" },
+    { label: "Net Cashflow",      value: "$48.8M",  sub: "Positive surplus", icon: Wallet,       color: "text-primary",               bg: "bg-primary/10" },
+    { label: "Pending Invoice",   value: "$12.0M",  sub: "1 active invoice",icon: FileText,     color: "text-[oklch(0.70_0.12_55)]",  bg: "bg-[oklch(0.18_0.02_55)]/30" },
   ];
 
   return (
@@ -345,7 +345,7 @@ export default function QuickDemo() {
                     <BarChart data={DEMO_MONTHLY} margin={{ top: 4, right: 4, left: 0, bottom: 0 }} barGap={3}>
                       <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.22 0.006 240)" vertical={false} />
                       <XAxis dataKey="month" tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatIDR} width={58} />
+                      <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatUSD} width={58} />
                       <Tooltip content={<ChartTooltip />} />
                       <Bar dataKey="income" name="Income" fill="oklch(0.65 0.12 145)" radius={[3, 3, 0, 0]} />
                       <Bar dataKey="expense" name="Expense" fill="oklch(0.60 0.18 25)" radius={[3, 3, 0, 0]} />
@@ -373,7 +373,7 @@ export default function QuickDemo() {
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.22 0.006 240)" vertical={false} />
                       <XAxis dataKey="month" tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatIDR} width={58} />
+                      <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatUSD} width={58} />
                       <Tooltip content={<ChartTooltip />} />
                       <Area dataKey="net" name="Net Cashflow" stroke="oklch(0.72 0.14 195)" strokeWidth={2} fill="url(#demoNet)" dot={{ fill: "oklch(0.72 0.14 195)", r: 3, strokeWidth: 0 }} />
                     </AreaChart>
@@ -416,7 +416,7 @@ export default function QuickDemo() {
                           <td className={`px-4 py-2.5 text-xs tabular-nums text-right font-semibold ${
                             tx.type === "income" ? "text-[oklch(0.65_0.12_145)]" : tx.type === "expense" ? "text-[oklch(0.60_0.18_25)]" : "text-[oklch(0.70_0.12_55)]"
                           }`}>
-                            {tx.type === "expense" ? "−" : "+"}{formatIDR(tx.amount)}
+                            {tx.type === "expense" ? "−" : "+"}{formatUSD(tx.amount)}
                           </td>
                         </tr>
                       ))}
@@ -526,7 +526,7 @@ export default function QuickDemo() {
                     </div>
                     <div className="text-right">
                       <span className="text-sm font-bold tabular-nums">{employeeCount} person{employeeCount !== 1 ? "s" : ""}</span>
-                      {employeeCount > 0 && <div className="text-[10px] text-destructive/80">+{formatIDR(employeeCount * 3_500_000)}/month</div>}
+                      {employeeCount > 0 && <div className="text-[10px] text-destructive/80">+{formatUSD(employeeCount * 3_500_000)}/month</div>}
                     </div>
                   </div>
                   <Slider value={[employeeCount]} onValueChange={([v]) => setEmployeeCount(v)} min={0} max={10} step={1} />
@@ -540,10 +540,10 @@ export default function QuickDemo() {
                       <RefreshCw className="h-3.5 w-3.5 text-muted-foreground" />
                       <span className="text-sm font-medium">Additional Inventory / Month</span>
                     </div>
-                    <span className="text-sm font-bold tabular-nums">{formatIDR(inventoryBudget)}</span>
+                    <span className="text-sm font-bold tabular-nums">{formatUSD(inventoryBudget)}</span>
                   </div>
                   <Slider value={[inventoryBudget]} onValueChange={([v]) => setInventoryBudget(v)} min={0} max={20_000_000} step={500_000} />
-                  <div className="flex justify-between text-[10px] text-muted-foreground"><span>Rp 0</span><span>Rp 20M</span></div>
+                  <div className="flex justify-between text-[10px] text-muted-foreground"><span>$0</span><span>$20M</span></div>
                 </div>
 
                 {/* Market Growth */}
@@ -569,7 +569,7 @@ export default function QuickDemo() {
                       <div key={row.month} className="text-center">
                         <div className="text-[10px] text-muted-foreground mb-1">{row.month}</div>
                         <div className={`text-sm font-bold tabular-nums ${row.net >= 0 ? "text-primary" : "text-destructive"}`}>
-                          {row.net >= 0 ? "+" : ""}{formatIDR(row.net)}
+                          {row.net >= 0 ? "+" : ""}{formatUSD(row.net)}
                         </div>
                         <div className="text-[10px] text-muted-foreground">net</div>
                       </div>
@@ -578,7 +578,7 @@ export default function QuickDemo() {
                   <div className="mt-3 pt-3 border-t border-primary/20 flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">3-month total:</span>
                     <span className={`text-sm font-bold tabular-nums ${totalNet >= 0 ? "text-primary" : "text-destructive"}`}>
-                      {totalNet >= 0 ? "+" : ""}{formatIDR(totalNet)}
+                      {totalNet >= 0 ? "+" : ""}{formatUSD(totalNet)}
                     </span>
                   </div>
                 </div>
@@ -594,9 +594,9 @@ export default function QuickDemo() {
           <TabsContent value="forecast" className="space-y-4">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { label: "Projected Revenue",   value: formatIDR(adjustedForecast.reduce((s,r)=>s+r.income,0)), color: "text-[oklch(0.65_0.12_145)]" },
-                { label: "Projected Expenses",   value: formatIDR(adjustedForecast.reduce((s,r)=>s+r.expense,0)), color: "text-[oklch(0.60_0.18_25)]" },
-                { label: "3-Month Net Cashflow", value: (totalNet>=0?"+":"")+formatIDR(totalNet), color: totalNet>=0?"text-primary":"text-destructive" },
+                { label: "Projected Revenue",   value: formatUSD(adjustedForecast.reduce((s,r)=>s+r.income,0)), color: "text-[oklch(0.65_0.12_145)]" },
+                { label: "Projected Expenses",   value: formatUSD(adjustedForecast.reduce((s,r)=>s+r.expense,0)), color: "text-[oklch(0.60_0.18_25)]" },
+                { label: "3-Month Net Cashflow", value: (totalNet>=0?"+":"")+formatUSD(totalNet), color: totalNet>=0?"text-primary":"text-destructive" },
                 { label: "Avg Confidence",        value: "82%", color: "text-muted-foreground" },
               ].map((k) => (
                 <Card key={k.label} className="bg-card border-border">
@@ -616,7 +616,7 @@ export default function QuickDemo() {
                     <BarChart data={adjustedForecast} margin={{ top: 4, right: 4, left: 0, bottom: 0 }} barGap={3}>
                       <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.22 0.006 240)" vertical={false} />
                       <XAxis dataKey="month" tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatIDR} width={58} />
+                      <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatUSD} width={58} />
                       <Tooltip content={<ChartTooltip />} />
                       <Bar dataKey="income" name="Income" fill="oklch(0.65 0.12 145)" radius={[3,3,0,0]} />
                       <Bar dataKey="expense" name="Expense" fill="oklch(0.60 0.18 25)" radius={[3,3,0,0]} />
@@ -638,7 +638,7 @@ export default function QuickDemo() {
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.22 0.006 240)" vertical={false} />
                       <XAxis dataKey="month" tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatIDR} width={58} />
+                      <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatUSD} width={58} />
                       <ReferenceLine y={0} stroke="oklch(0.55 0.15 25)" strokeDasharray="4 4" strokeWidth={1.5} />
                       <Tooltip content={<ChartTooltip />} />
                       <Area dataKey="net" name="Net Cashflow" stroke="oklch(0.72 0.14 195)" strokeWidth={2} fill="url(#forecastNet)" dot={{ fill: "oklch(0.72 0.14 195)", r: 4, strokeWidth: 0 }} />
@@ -665,10 +665,10 @@ export default function QuickDemo() {
                     {adjustedForecast.map((row, i) => (
                       <tr key={row.month} className={`border-b border-border/40 hover:bg-accent/20 ${i%2===0?"":"bg-accent/5"}`}>
                         <td className="px-4 py-3 text-sm font-medium">{row.month}</td>
-                        <td className="px-4 py-3 text-sm tabular-nums text-right text-[oklch(0.65_0.12_145)]">{formatIDR(row.income)}</td>
-                        <td className="px-4 py-3 text-sm tabular-nums text-right text-[oklch(0.60_0.18_25)]">{formatIDR(row.expense)}</td>
+                        <td className="px-4 py-3 text-sm tabular-nums text-right text-[oklch(0.65_0.12_145)]">{formatUSD(row.income)}</td>
+                        <td className="px-4 py-3 text-sm tabular-nums text-right text-[oklch(0.60_0.18_25)]">{formatUSD(row.expense)}</td>
                         <td className={`px-4 py-3 text-sm tabular-nums text-right font-bold ${row.net>=0?"text-primary":"text-destructive"}`}>
-                          {row.net>=0?"+":""}{formatIDR(row.net)}
+                          {row.net>=0?"+":""}{formatUSD(row.net)}
                         </td>
                         <td className="px-4 py-3 text-right">
                           <div className="flex items-center justify-end gap-2">

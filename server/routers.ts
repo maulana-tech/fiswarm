@@ -22,8 +22,8 @@ import {
 import { invokeLLM } from "./_core/llm";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-function formatIDR(amount: number) {
-  return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(amount);
+function formatUSD(amount: number) {
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(amount);
 }
 
 function buildAgentSystemPrompt(
@@ -74,7 +74,7 @@ async function generateSeedText(
   for (const [month, data] of Object.entries(grouped).sort()) {
     const net = data.income - data.expense;
     lines.push(
-      `${month}: Income ${formatIDR(data.income)}, Expense ${formatIDR(data.expense)}, Invoice ${formatIDR(data.invoice)}, Net ${formatIDR(net)}`
+      `${month}: Income ${formatUSD(data.income)}, Expense ${formatUSD(data.expense)}, Invoice ${formatUSD(data.invoice)}, Net ${formatUSD(net)}`
     );
   }
 
@@ -86,7 +86,7 @@ async function generateSeedText(
   Object.entries(categories)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 8)
-    .forEach(([cat, amt]) => lines.push(`${cat}: ${formatIDR(amt)}`));
+    .forEach(([cat, amt]) => lines.push(`${cat}: ${formatUSD(amt)}`));
 
   const totalIncome = transactions.filter((t) => t.type === "income").reduce((s, t) => s + parseFloat(t.amount), 0);
   const totalExpense = transactions.filter((t) => t.type === "expense").reduce((s, t) => s + parseFloat(t.amount), 0);
@@ -94,11 +94,11 @@ async function generateSeedText(
   const avgMonthlyExpense = totalExpense / Math.max(Object.keys(grouped).length, 1);
 
   lines.push("\n=== BUSINESS METRICS ===");
-  lines.push(`Total Income: ${formatIDR(totalIncome)}`);
-  lines.push(`Total Expense: ${formatIDR(totalExpense)}`);
-  lines.push(`Net Balance: ${formatIDR(totalIncome - totalExpense)}`);
-  lines.push(`Avg Monthly Income: ${formatIDR(avgMonthlyIncome)}`);
-  lines.push(`Avg Monthly Expense: ${formatIDR(avgMonthlyExpense)}`);
+  lines.push(`Total Income: ${formatUSD(totalIncome)}`);
+  lines.push(`Total Expense: ${formatUSD(totalExpense)}`);
+  lines.push(`Net Balance: ${formatUSD(totalIncome - totalExpense)}`);
+  lines.push(`Avg Monthly Income: ${formatUSD(avgMonthlyIncome)}`);
+  lines.push(`Avg Monthly Expense: ${formatUSD(avgMonthlyExpense)}`);
   lines.push(`Cashflow Ratio: ${totalExpense > 0 ? ((totalIncome / totalExpense) * 100).toFixed(1) : "N/A"}%`);
 
   return lines.join("\n");
@@ -155,7 +155,7 @@ ${seedText}
 SCENARIO ADJUSTMENTS:
 - Price change: ${priceChange > 0 ? "+" : ""}${priceChange}%
 - New employees: ${employeeCount} (each adds ~IDR 3,500,000/month expense)
-- Additional inventory budget: ${formatIDR(inventoryBudget)}/month
+- Additional inventory budget: ${formatUSD(inventoryBudget)}/month
 - Market growth assumption: ${marketGrowth > 0 ? "+" : ""}${marketGrowth}%
 
 Generate a JSON array with exactly ${forecastMonths} months of forecast data. Each month should be realistic based on the historical data trends with the scenario adjustments applied.`;
@@ -245,21 +245,21 @@ Generate a JSON array with exactly ${forecastMonths} months of forecast data. Ea
     riskAlerts.push({
       severity: "medium",
       title: "Peningkatan Biaya Tenaga Kerja",
-      description: `Penambahan ${employeeCount} karyawan akan meningkatkan biaya operasional sebesar ${formatIDR(employeeCount * 3500000)}/bulan.`,
+      description: `Penambahan ${employeeCount} karyawan akan meningkatkan biaya operasional sebesar ${formatUSD(employeeCount * 3500000)}/bulan.`,
     });
   }
   if (inventoryBudget > 5000000) {
     riskAlerts.push({
       severity: "medium",
       title: "Anggaran Inventaris Tinggi",
-      description: `Anggaran inventaris ${formatIDR(inventoryBudget)}/bulan dapat menekan cashflow jika penjualan tidak meningkat.`,
+      description: `Anggaran inventaris ${formatUSD(inventoryBudget)}/bulan dapat menekan cashflow jika penjualan tidak meningkat.`,
     });
   }
   if (avgNet > 5000000) {
     riskAlerts.push({
       severity: "low",
       title: "Cashflow Sehat",
-      description: `Rata-rata cashflow positif ${formatIDR(avgNet)}/bulan menunjukkan kondisi keuangan yang baik.`,
+      description: `Rata-rata cashflow positif ${formatUSD(avgNet)}/bulan menunjukkan kondisi keuangan yang baik.`,
     });
   }
 
@@ -551,7 +551,7 @@ ${sim.seedText}
 ${JSON.stringify(sim.scenarioParams, null, 2)}
 
 === PREDIKSI CASHFLOW (${sim.forecastMonths} BULAN) ===
-${forecast.map((m) => `${m.month}: Pemasukan ${formatIDR(m.income)}, Pengeluaran ${formatIDR(m.expense)}, Net ${formatIDR(m.net)}, Kepercayaan ${m.confidence}%`).join("\n")}
+${forecast.map((m) => `${m.month}: Pemasukan ${formatUSD(m.income)}, Pengeluaran ${formatUSD(m.expense)}, Net ${formatUSD(m.net)}, Kepercayaan ${m.confidence}%`).join("\n")}
 
 === TINGKAT RISIKO: ${sim.riskLevel?.toUpperCase()} ===
 

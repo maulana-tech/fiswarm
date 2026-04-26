@@ -18,13 +18,13 @@ import { AIChatBox, type Message } from "@/components/AIChatBox";
 
 interface Props { id: number; }
 
-function formatIDR(n: number) {
-  if (Math.abs(n) >= 1_000_000) return `Rp ${(n / 1_000_000).toFixed(1)}M`;
-  if (Math.abs(n) >= 1_000) return `Rp ${(n / 1_000).toFixed(0)}K`;
-  return `Rp ${n.toFixed(0)}`;
+function formatUSD(n: number) {
+  if (Math.abs(n) >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (Math.abs(n) >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
+  return `$${n.toFixed(0)}`;
 }
 
-function formatIDRFull(n: number) {
+function formatUSDFull(n: number) {
   return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 }
 
@@ -149,7 +149,7 @@ function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: 
       {payload.map((p) => (
         <div key={p.name} className="flex items-center justify-between gap-4">
           <span style={{ color: p.color }}>{p.name}</span>
-          <span className="font-semibold tabular-nums" style={{ color: p.color }}>{formatIDR(p.value)}</span>
+          <span className="font-semibold tabular-nums" style={{ color: p.color }}>{formatUSD(p.value)}</span>
         </div>
       ))}
     </div>
@@ -269,7 +269,7 @@ export default function SimulationDetail({ id }: Props) {
                 <ChevronRight className="h-3 w-3" />
                 {params.priceChange !== 0 && `Price ${params.priceChange > 0 ? "+" : ""}${params.priceChange}%`}
                 {params.employeeCount > 0 && ` · +${params.employeeCount} employees`}
-                {params.inventoryBudget > 0 && ` · Inventory +${formatIDR(params.inventoryBudget)}/mo`}
+                {params.inventoryBudget > 0 && ` · Inventory +${formatUSD(params.inventoryBudget)}/mo`}
                 {params.marketGrowth !== 0 && ` · Market ${params.marketGrowth > 0 ? "+" : ""}${params.marketGrowth}%`}
               </span>
             )}
@@ -332,7 +332,7 @@ export default function SimulationDetail({ id }: Props) {
           {[
             {
               label: "Total Projected Income",
-              value: formatIDR(totalIncome),
+              value: formatUSD(totalIncome),
               sub: `${sim.forecastMonths} months`,
               icon: TrendingUp,
               color: "text-[oklch(0.65_0.12_145)]",
@@ -340,7 +340,7 @@ export default function SimulationDetail({ id }: Props) {
             },
             {
               label: "Total Projected Expense",
-              value: formatIDR(totalExpense),
+              value: formatUSD(totalExpense),
               sub: `${sim.forecastMonths} months`,
               icon: TrendingDown,
               color: "text-[oklch(0.60_0.18_25)]",
@@ -348,7 +348,7 @@ export default function SimulationDetail({ id }: Props) {
             },
             {
               label: "Net Cashflow",
-              value: (totalNet >= 0 ? "+" : "") + formatIDR(totalNet),
+              value: (totalNet >= 0 ? "+" : "") + formatUSD(totalNet),
               sub: totalNet >= 0 ? "Positive" : "Negative",
               icon: totalNet >= 0 ? TrendingUp : TrendingDown,
               color: totalNet >= 0 ? "text-primary" : "text-destructive",
@@ -429,7 +429,7 @@ export default function SimulationDetail({ id }: Props) {
                         <BarChart data={forecast} margin={{ top: 4, right: 4, left: 0, bottom: 0 }} barGap={3}>
                           <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.22 0.006 240)" vertical={false} />
                           <XAxis dataKey="month" tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} />
-                          <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatIDR} width={58} />
+                          <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatUSD} width={58} />
                           <Tooltip content={<ChartTooltip />} />
                           <Bar dataKey="income" name="Income" fill="oklch(0.65 0.12 145)" radius={[3, 3, 0, 0]} />
                           <Bar dataKey="expense" name="Expense" fill="oklch(0.60 0.18 25)" radius={[3, 3, 0, 0]} />
@@ -464,7 +464,7 @@ export default function SimulationDetail({ id }: Props) {
                           </defs>
                           <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.22 0.006 240)" vertical={false} />
                           <XAxis dataKey="month" tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} />
-                          <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatIDR} width={58} />
+                          <YAxis tick={{ fontSize: 10, fill: "oklch(0.50 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={formatUSD} width={58} />
                           <ReferenceLine y={0} stroke="oklch(0.55 0.15 25)" strokeDasharray="4 4" strokeWidth={1.5} />
                           <Tooltip content={<ChartTooltip />} />
                           <Area
@@ -503,15 +503,15 @@ export default function SimulationDetail({ id }: Props) {
                           {forecast.map((row, i) => (
                             <tr key={row.month} className={`border-b border-border/40 hover:bg-accent/20 transition-colors ${i % 2 === 0 ? "" : "bg-accent/5"}`}>
                               <td className="px-4 py-3 text-sm font-medium">{row.month}</td>
-                              <td className="px-4 py-3 text-sm tabular-nums text-right text-[oklch(0.65_0.12_145)]">{formatIDR(row.income)}</td>
-                              <td className="px-4 py-3 text-sm tabular-nums text-right text-[oklch(0.60_0.18_25)]">{formatIDR(row.expense)}</td>
+                              <td className="px-4 py-3 text-sm tabular-nums text-right text-[oklch(0.65_0.12_145)]">{formatUSD(row.income)}</td>
+                              <td className="px-4 py-3 text-sm tabular-nums text-right text-[oklch(0.60_0.18_25)]">{formatUSD(row.expense)}</td>
                               <td className={`px-4 py-3 text-sm tabular-nums text-right font-semibold ${row.net >= 0 ? "text-primary" : "text-destructive"}`}>
                                 <span className="flex items-center justify-end gap-1">
                                   {row.net >= 0
                                     ? <TrendingUp className="h-3 w-3" />
                                     : <TrendingDown className="h-3 w-3" />
                                   }
-                                  {row.net >= 0 ? "+" : ""}{formatIDR(row.net)}
+                                  {row.net >= 0 ? "+" : ""}{formatUSD(row.net)}
                                 </span>
                               </td>
                               <td className="px-4 py-3 text-right">
@@ -531,10 +531,10 @@ export default function SimulationDetail({ id }: Props) {
                         <tfoot>
                           <tr className="border-t border-border bg-accent/10">
                             <td className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total</td>
-                            <td className="px-4 py-3 text-sm tabular-nums text-right font-semibold text-[oklch(0.65_0.12_145)]">{formatIDR(totalIncome)}</td>
-                            <td className="px-4 py-3 text-sm tabular-nums text-right font-semibold text-[oklch(0.60_0.18_25)]">{formatIDR(totalExpense)}</td>
+                            <td className="px-4 py-3 text-sm tabular-nums text-right font-semibold text-[oklch(0.65_0.12_145)]">{formatUSD(totalIncome)}</td>
+                            <td className="px-4 py-3 text-sm tabular-nums text-right font-semibold text-[oklch(0.60_0.18_25)]">{formatUSD(totalExpense)}</td>
                             <td className={`px-4 py-3 text-sm tabular-nums text-right font-bold ${totalNet >= 0 ? "text-primary" : "text-destructive"}`}>
-                              {totalNet >= 0 ? "+" : ""}{formatIDR(totalNet)}
+                              {totalNet >= 0 ? "+" : ""}{formatUSD(totalNet)}
                             </td>
                             <td className="px-4 py-3 text-xs tabular-nums text-right text-muted-foreground">{avgConfidence}% avg</td>
                           </tr>

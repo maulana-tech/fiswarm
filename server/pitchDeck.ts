@@ -65,11 +65,11 @@ export interface PitchDeckInput {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function formatIDR(n: number): string {
-  if (n >= 1_000_000_000) return `Rp ${(n / 1_000_000_000).toFixed(1)}M`;
-  if (n >= 1_000_000) return `Rp ${(n / 1_000_000).toFixed(1)}jt`;
-  if (n >= 1_000) return `Rp ${(n / 1_000).toFixed(0)}rb`;
-  return `Rp ${n.toFixed(0)}`;
+function formatUSD(n: number): string {
+  if (n >= 1_000_000_000) return `$${(n / 1_000_000_000).toFixed(1)}B`;
+  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
+  return `$${n.toFixed(0)}`;
 }
 
 function severityColor(s: string): string {
@@ -119,7 +119,7 @@ function buildBarChart(forecast: ForecastMonth[]): string {
 
   const yLines = [0, 0.25, 0.5, 0.75, 1].map((pct) => {
     const y = H - PAD - pct * chartH;
-    const val = formatIDR(pct * maxVal);
+    const val = formatUSD(pct * maxVal);
     return `
       <line x1="${PAD}" y1="${y}" x2="${W - PAD}" y2="${y}" stroke="#333" stroke-width="1"/>
       <text x="${PAD - 4}" y="${y + 4}" text-anchor="end" font-size="8" fill="#666">${val}</text>
@@ -160,7 +160,7 @@ function buildAreaChart(forecast: ForecastMonth[]): string {
 
   const dots = points.map((p) => `
     <circle cx="${p.x}" cy="${p.y}" r="4" fill="${p.f.net >= 0 ? "#00d4aa" : "#ff6b6b"}" stroke="#0a0a0a" stroke-width="1.5"/>
-    <text x="${p.x}" y="${p.y - 8}" text-anchor="middle" font-size="8" fill="${p.f.net >= 0 ? "#00d4aa" : "#ff6b6b"}">${formatIDR(p.f.net)}</text>
+    <text x="${p.x}" y="${p.y - 8}" text-anchor="middle" font-size="8" fill="${p.f.net >= 0 ? "#00d4aa" : "#ff6b6b"}">${formatUSD(p.f.net)}</text>
   `).join("");
 
   const labels = points.map((p) => `
@@ -232,15 +232,15 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
       <div class="exec-summary">${executiveSummary.replace(/\n/g, "<br/>")}</div>
       <div class="kpi-row">
         <div class="kpi-mini">
-          <div class="kpi-mini-val" style="color:#00d4aa">${formatIDR(kpis.totalIncome)}</div>
+          <div class="kpi-mini-val" style="color:#00d4aa">${formatUSD(kpis.totalIncome)}</div>
           <div class="kpi-mini-label">Total Projected Revenue</div>
         </div>
         <div class="kpi-mini">
-          <div class="kpi-mini-val" style="color:#ff6b6b">${formatIDR(kpis.totalExpense)}</div>
+          <div class="kpi-mini-val" style="color:#ff6b6b">${formatUSD(kpis.totalExpense)}</div>
           <div class="kpi-mini-label">Total Projected Expenses</div>
         </div>
         <div class="kpi-mini">
-          <div class="kpi-mini-val" style="color:${kpis.netCashflow >= 0 ? "#00d4aa" : "#ff6b6b"}">${formatIDR(kpis.netCashflow)}</div>
+          <div class="kpi-mini-val" style="color:${kpis.netCashflow >= 0 ? "#00d4aa" : "#ff6b6b"}">${formatUSD(kpis.netCashflow)}</div>
           <div class="kpi-mini-label">Projected Net Cashflow</div>
         </div>
         <div class="kpi-mini">
@@ -259,17 +259,17 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
       <div class="kpi-grid">
         <div class="kpi-card">
           <div class="kpi-icon" style="background:#00d4aa22;color:#00d4aa">↑</div>
-          <div class="kpi-val" style="color:#00d4aa">${formatIDR(kpis.avgMonthlyIncome)}</div>
+          <div class="kpi-val" style="color:#00d4aa">${formatUSD(kpis.avgMonthlyIncome)}</div>
           <div class="kpi-lbl">Avg Revenue/Month</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-icon" style="background:#ff6b6b22;color:#ff6b6b">↓</div>
-          <div class="kpi-val" style="color:#ff6b6b">${formatIDR(kpis.avgMonthlyExpense)}</div>
+          <div class="kpi-val" style="color:#ff6b6b">${formatUSD(kpis.avgMonthlyExpense)}</div>
           <div class="kpi-lbl">Avg Expenses/Month</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-icon" style="background:${kpis.netCashflow >= 0 ? "#00d4aa22" : "#ff6b6b22"};color:${kpis.netCashflow >= 0 ? "#00d4aa" : "#ff6b6b"}">≈</div>
-          <div class="kpi-val" style="color:${kpis.netCashflow >= 0 ? "#00d4aa" : "#ff6b6b"}">${formatIDR(kpis.netCashflow / Math.max(forecastMonths, 1))}</div>
+          <div class="kpi-val" style="color:${kpis.netCashflow >= 0 ? "#00d4aa" : "#ff6b6b"}">${formatUSD(kpis.netCashflow / Math.max(forecastMonths, 1))}</div>
           <div class="kpi-lbl">Net Cashflow/Month</div>
         </div>
         <div class="kpi-card">
@@ -299,9 +299,9 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
       <div class="chart-wrap">${barChart}</div>
       <div class="chart-insight">
         <span style="color:#00d4aa">▲ Revenue tertinggi:</span>
-        ${formatIDR(Math.max(...forecast.map((f) => f.income)))} &nbsp;|&nbsp;
+        ${formatUSD(Math.max(...forecast.map((f) => f.income)))} &nbsp;|&nbsp;
         <span style="color:#ff6b6b">▼ Expenses tertinggi:</span>
-        ${formatIDR(Math.max(...forecast.map((f) => f.expense)))}
+        ${formatUSD(Math.max(...forecast.map((f) => f.expense)))}
       </div>
     </div>
   `);
@@ -319,9 +319,9 @@ export function buildPitchDeckHTML(data: PitchDeckInput): string {
             ${forecast.map((f) => `
               <tr>
                 <td>${f.month}</td>
-                <td style="color:#00d4aa">${formatIDR(f.income)}</td>
-                <td style="color:#ff6b6b">${formatIDR(f.expense)}</td>
-                <td style="color:${f.net >= 0 ? "#00d4aa" : "#ff6b6b"};font-weight:600">${formatIDR(f.net)}</td>
+                <td style="color:#00d4aa">${formatUSD(f.income)}</td>
+                <td style="color:#ff6b6b">${formatUSD(f.expense)}</td>
+                <td style="color:${f.net >= 0 ? "#00d4aa" : "#ff6b6b"};font-weight:600">${formatUSD(f.net)}</td>
                 <td>
                   <div class="conf-bar"><div class="conf-fill" style="width:${f.confidence}%;background:${f.confidence > 70 ? "#00d4aa" : f.confidence > 40 ? "#eab308" : "#ff6b6b"}"></div></div>
                   ${f.confidence}%

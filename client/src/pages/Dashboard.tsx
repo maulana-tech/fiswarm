@@ -17,10 +17,10 @@ import {
 import { TrendingUp, TrendingDown, Wallet, Activity, Plus, BrainCircuit } from "lucide-react";
 import { useMemo } from "react";
 
-function formatIDR(n: number) {
-  if (Math.abs(n) >= 1_000_000) return `Rp ${(n / 1_000_000).toFixed(1)}M`;
-  if (Math.abs(n) >= 1_000) return `Rp ${(n / 1_000).toFixed(0)}K`;
-  return `Rp ${n.toFixed(0)}`;
+function formatUSD(n: number) {
+  if (Math.abs(n) >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (Math.abs(n) >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
+  return `$${n.toFixed(0)}`;
 }
 
 export default function Dashboard() {
@@ -51,25 +51,25 @@ export default function Dashboard() {
   const kpiCards = [
     {
       label: "Total Income",
-      value: kpis ? formatIDR(kpis.totalIncome) : "—",
+      value: kpis ? formatUSD(kpis.totalIncome) : "—",
       icon: TrendingUp,
       color: "text-[oklch(0.65_0.12_145)]",
     },
     {
       label: "Total Expense",
-      value: kpis ? formatIDR(kpis.totalExpense) : "—",
+      value: kpis ? formatUSD(kpis.totalExpense) : "—",
       icon: TrendingDown,
       color: "text-[oklch(0.60_0.18_25)]",
     },
     {
       label: "Net Balance",
-      value: kpis ? formatIDR(kpis.balance) : "—",
+      value: kpis ? formatUSD(kpis.balance) : "—",
       icon: Wallet,
       color: kpis && kpis.balance >= 0 ? "text-primary" : "text-destructive",
     },
     {
       label: "Pending Invoices",
-      value: kpis ? formatIDR(kpis.totalInvoice) : "—",
+      value: kpis ? formatUSD(kpis.totalInvoice) : "—",
       icon: Activity,
       color: "text-[oklch(0.70_0.12_55)]",
     },
@@ -136,10 +136,10 @@ export default function Dashboard() {
                 <BarChart data={chartData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.24 0.008 240)" vertical={false} />
                   <XAxis dataKey="month" tick={{ fontSize: 10, fill: "oklch(0.55 0.008 240)" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.55 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={(v) => formatIDR(v)} width={60} />
+                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.55 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={(v) => formatUSD(v)} width={60} />
                   <Tooltip
                     contentStyle={{ background: "oklch(0.16 0.006 240)", border: "1px solid oklch(0.24 0.008 240)", borderRadius: 4, fontSize: 12 }}
-                    formatter={(v: number) => formatIDR(v)}
+                    formatter={(v: number) => formatUSD(v)}
                   />
                   <Legend wrapperStyle={{ fontSize: 11 }} />
                   <Bar dataKey="income" name="Income" fill="oklch(0.65 0.12 145)" radius={[2, 2, 0, 0]} />
@@ -173,10 +173,10 @@ export default function Dashboard() {
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.24 0.008 240)" vertical={false} />
                   <XAxis dataKey="month" tick={{ fontSize: 10, fill: "oklch(0.55 0.008 240)" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.55 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={(v) => formatIDR(v)} width={60} />
+                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.55 0.008 240)" }} axisLine={false} tickLine={false} tickFormatter={(v) => formatUSD(v)} width={60} />
                   <Tooltip
                     contentStyle={{ background: "oklch(0.16 0.006 240)", border: "1px solid oklch(0.24 0.008 240)", borderRadius: 4, fontSize: 12 }}
-                    formatter={(v: number) => formatIDR(v)}
+                    formatter={(v: number) => formatUSD(v)}
                   />
                   <Area dataKey="net" name="Net Cashflow" stroke="oklch(0.72 0.14 195)" strokeWidth={2} fill="url(#netGrad)" />
                 </AreaChart>

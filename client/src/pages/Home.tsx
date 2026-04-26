@@ -98,9 +98,9 @@ function KpiPreview() {
       {/* KPI row */}
       <div className="grid grid-cols-3 gap-px bg-white/5 border-b border-white/10">
         {[
-          { label: "TOTAL REVENUE", val: "Rp 48.2M", up: true },
-          { label: "EXPENSES", val: "Rp 31.5M", up: false },
-          { label: "NET CASHFLOW", val: "Rp 16.7M", up: true },
+          { label: "TOTAL REVENUE", val: "$48.2M", up: true },
+          { label: "EXPENSES", val: "$31.5M", up: false },
+          { label: "NET CASHFLOW", val: "$16.7M", up: true },
         ].map((k) => (
           <div key={k.label} className="px-3 py-2.5 bg-[#0a0f0d]">
             <div className="text-white/30 text-[8px] tracking-widest mb-1">{k.label}</div>
@@ -171,7 +171,7 @@ function FeaturePreview({ type }: { type: string }) {
   if (type === "kpi") {
     return (
       <div className="mt-4 grid grid-cols-3 gap-2">
-        {["Rp 48.2M", "Rp 31.5M", "Rp 16.7M"].map((v, i) => (
+        {["$48.2M", "$31.5M", "$16.7M"].map((v, i) => (
           <div key={i} className="rounded-lg border border-white/10 bg-white/[0.03] px-2 py-2">
             <div className="text-[9px] text-white/30 mb-1">{["REVENUE", "EXPENSES", "NET"][i]}</div>
             <div className={`text-xs font-bold ${i === 1 ? "text-red-400" : "text-[#00d4aa]"}`}>{v}</div>
@@ -230,7 +230,7 @@ function FeaturePreview({ type }: { type: string }) {
         </div>
         <div className="flex gap-1.5 text-[9px]">
           <span className="text-amber-400/60 font-mono">AI:</span>
-          <span className="text-white/40">Positive cashflow +Rp 4.2M...</span>
+          <span className="text-white/40">Positive cashflow +$4.2M...</span>
         </div>
       </div>
     );

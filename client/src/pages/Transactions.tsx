@@ -19,7 +19,7 @@ const INCOME_CATEGORIES = ["Sales Revenue", "Service Fee", "Investment Return", 
 const EXPENSE_CATEGORIES = ["Raw Materials", "Salaries", "Rent", "Utilities", "Marketing", "Equipment", "Transport", "Tax", "Other Expense"];
 const INVOICE_CATEGORIES = ["Customer Invoice", "Supplier Invoice", "Government Invoice", "Other Invoice"];
 
-function formatIDR(n: number) {
+function formatUSD(n: number) {
   return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 }
 
@@ -304,7 +304,7 @@ export default function Transactions() {
                     <td className="px-4 py-3 text-sm">{tx.category}</td>
                     <td className="px-4 py-3 text-sm text-muted-foreground max-w-[200px] truncate">{tx.description || "—"}</td>
                     <td className={`px-4 py-3 text-sm font-num text-right font-medium ${typeColor(tx.type)}`}>
-                      {tx.type === "expense" ? "−" : "+"}{formatIDR(parseFloat(tx.amount))}
+                      {tx.type === "expense" ? "−" : "+"}{formatUSD(parseFloat(tx.amount))}
                     </td>
                     <td className="px-4 py-3">
                       <button
